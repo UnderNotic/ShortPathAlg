@@ -4,6 +4,6 @@
     {
         public double Pos1 { get; set; }
         public double Pos2 { get; set; }
-        public string Name { get; set; }
+        public int StoreId { get; set; }
     }
 }
