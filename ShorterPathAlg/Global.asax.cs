@@ -23,6 +23,7 @@ namespace ShorterPathAlg
             // OPTIONAL: Register the Autofac filter provider.
             builder.RegisterWebApiFilterProvider(config);
 
+            Bootstrap(builder);
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
@@ -32,6 +33,11 @@ namespace ShorterPathAlg
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+        }
+
+        private void Bootstrap(ContainerBuilder builder)
+        {
+           
         }
     }
 }

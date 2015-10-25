@@ -8,13 +8,17 @@ using ShorterPathAlg.Models;
 
 namespace ShorterPathAlg.Providers
 {
+    public interface ICsvFileReader
+    {
+        IEnumerable<CsvLocation> GetLocations();
+    }
+
     public class CsvFileReader
     {
         private string _pathToFile = Directory.GetCurrentDirectory();
 
         public CsvFileReader()
         {
-            
         }
 
         public IEnumerable<CsvLocation> GetLocations()
@@ -22,7 +26,7 @@ namespace ShorterPathAlg.Providers
            return
                 File.ReadAllLines(_pathToFile).Skip(1).Select(s => s.Split(',')).Select(strings => new CsvLocation()
                 {
-                    StoreId = int.Parse(strings[0]),
+                    Id = int.Parse(strings[0]),
                     Name = strings[1],
                     Brand = strings[1],
                     StoreNumber = strings[2],

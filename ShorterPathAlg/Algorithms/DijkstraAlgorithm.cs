@@ -10,7 +10,17 @@ namespace ShorterPathAlg.Algorithms
 
     public class DijkstraAlgorithm : IDijkstraAlgorithm
     {
-        public List<Location> GetShorterPath(IEnumerable<Location> locations)
+        private IDictionary<Location,  double> _pathValues = new Dictionary<Location, double>();
+
+
+        public List<Location> GetShortestPath(IEnumerable<Location> locations, Location startingLocation, Location destinationLocation)
+        {
+            ComputePathsCosts();
+
+            return null;
+        }
+
+        private void ComputePathsCosts()
         {
             throw new System.NotImplementedException();
         }

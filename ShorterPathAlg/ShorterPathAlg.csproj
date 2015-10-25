@@ -177,6 +177,7 @@
     <Compile Include="Models\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CsvFileReader.cs" />
+    <Compile Include="Providers\RandomGraphGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
