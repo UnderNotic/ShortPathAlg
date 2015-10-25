@@ -5,7 +5,7 @@ using WebGrease.Css.Extensions;
 
 namespace ShorterPathAlg.Models
 {
-    public class Location
+    public class Location : IEquatable<Location>
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
@@ -28,6 +28,16 @@ namespace ShorterPathAlg.Models
             var result = Math.Sqrt(Math.Pow((Latitude - other.Latitude), 2) + Math.Pow((Longitude - other.Longitude), 2));
             var roundedResult = Math.Round(result, 4);
             return (decimal)result == 0 ? int.MaxValue : roundedResult;
+        }
+
+        public bool Equals(Location other)
+        {
+            return Id.Equals(other.Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return 37 * 166777 ^ Id.GetHashCode();
         }
     }
 }
