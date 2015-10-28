@@ -8,14 +8,14 @@ namespace ShorterPathAlg.Providers
 {
     public interface IRandomGraphGenerator
     {
-        void GenerateRandomPaths(IEnumerable<Location> locations);
+        void GenerateRandomPaths(IEnumerable<ConnectableLocation<Location>> locations);
     }
 
     public class RandomGraphGenerator : IRandomGraphGenerator
     {
-        private IEnumerable<Location> _locations; 
+        private IEnumerable<ConnectableLocation<Location>> _locations; 
 
-        public void GenerateRandomPaths(IEnumerable<Location> locations)
+        public void GenerateRandomPaths(IEnumerable<ConnectableLocation<Location>> locations)
         {
             _locations = locations;
             GenerateBasicCyclicGraph();
@@ -40,7 +40,7 @@ namespace ShorterPathAlg.Providers
             _locations.ForEach(location => location.ConnectedLocations.Add(GetClosestLocation(location)));
         }
 
-        private Location GetClosestLocation(Location location)
+        private Location GetClosestLocation(ConnectableLocation<Location> location)
         {
             return _locations.Aggregate((loc1, loc2) => location.ComputeEuclidicDistance(loc1) < location.ComputeEuclidicDistance(loc2) ? loc1 : loc2);
         }

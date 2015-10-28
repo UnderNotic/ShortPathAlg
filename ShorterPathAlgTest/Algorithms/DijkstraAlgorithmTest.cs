@@ -25,7 +25,7 @@ namespace ShorterPathAlgTest.Algorithms
         {
             var locations = LocationsForTesting.GetLocationsForTest();
 
-            var result = _alg.GetShortestPath(locations, locations.ElementAt(0), locations.ElementAt(2));
+            var result = _alg.GetShortestPath(locations, locations.ElementAt(0).Id, locations.ElementAt(2).Id);
             Assert.AreEqual(2, result.Count);
         }
 

@@ -6,23 +6,23 @@ namespace ShorterPathAlgTest
 {
     public static class LocationsForTesting
     {
-         public static IEnumerable<Location> GetLocationsForTest()
+         public static IEnumerable<ConnectableLocation<Location>> GetLocationsForTest()
         {
-            var locations = new List<Location>
+            var locations = new List<ConnectableLocation<Location>>
             {
-                new Location
+                new ConnectableLocation<Location>
                 {
                     Id = 1,
                     Longitude = 3,
                     Latitude = -4
                 },
-                new Location
+                new ConnectableLocation<Location>
                 {
                     Id = 2,
                     Longitude = -2,
                     Latitude = -3
                 },
-                new Location
+                new ConnectableLocation<Location>
                 {
                     Id = 3,
                     Longitude = 0,

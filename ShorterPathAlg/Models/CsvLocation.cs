@@ -1,6 +1,6 @@
 ﻿namespace ShorterPathAlg.Models
 {
-    public class CsvLocation : Location
+    public class CsvLocation : ConnectableLocation<CsvLocation>
     {
         public string Name { get; set; }
         public string Brand { get; set; }

@@ -15,49 +15,76 @@ namespace ShorterPathAlg.Algorithms
     {
         private HashSet<DijkstraLocation> _locations;
 
-
-        public List<Location> GetShortestPath(IEnumerable<Location> locations, int startingLocation,
+        public List<Location> GetShortestPath(IEnumerable<ConnectableLocation<Location>> locations, int startingLocation,
             int destinationLocation)
         {
             Init(locations, startingLocation);
 
-            while (_locations.Any())
-            {
-                var loc = _locations.Aggregate((loc1, loc2) => loc1.Distance < loc2.Distance ? loc1 : loc2);
-                _locations.Remove(loc);
+            var destLocation = ExecuteAlgorithm(destinationLocation);
 
-                foreach (var connectedLocation in loc.ConnectedLocations)
-                {
-                    var distance = loc.Distance + loc.ComputeEuclidicDistance(connectedLocation);
-                    if(connectedLocation.)
-                }
+            var stack = GetShorterPath(destLocation);
 
-            }
-
-            return null;
+            return stack.ToList();
         }
 
-        private void Init(IEnumerable<Location> locations, int startingLocationId)
+        private static Stack<Location> GetShorterPath(DijkstraLocation destLocation)
+        {
+            var stack = new Stack<Location>();
+
+            while (destLocation != null)
+            {
+                stack.Push(destLocation);
+                destLocation = destLocation.PreviousLocation;
+            }
+            return stack;
+        }
+
+        private DijkstraLocation ExecuteAlgorithm(int destinationLocationId)
+        {
+            while (_locations.Any())
+            {
+                var lastLocation = _locations.Aggregate((loc1, loc2) => loc1.Distance < loc2.Distance ? loc1 : loc2);
+                if (lastLocation.Id == destinationLocationId) return lastLocation;
+                _locations.Remove(lastLocation);
+
+                foreach (var connectedLocation in lastLocation.ConnectedLocations)
+                {
+                    var distance = lastLocation.Distance + lastLocation.ComputeEuclidicDistance(connectedLocation);
+
+                    var dijkstraLocation = connectedLocation;
+                    if (dijkstraLocation.Distance > distance)
+                    {
+                        dijkstraLocation.Distance = distance;
+                        dijkstraLocation.PreviousLocation = lastLocation;
+                    }
+                }
+            }
+            return null; //this should never happen, only when destinationId is not in graph
+        }
+
+        private void Init(IEnumerable<ConnectableLocation<Location>> locations, int startingLocationId)
         {
             locations.ForEach(location =>
             {
                 DijkstraLocation locToAdd = location.Id == startingLocationId ? new DijkstraLocation(location) {Distance = 0} : new DijkstraLocation(location);
                 _locations.Add(locToAdd);
             });
+
+            DijkstraLocation.MapConnectedLocations(_locations, locations);
         }
 
-        private class DijkstraLocation : Location
+        private class DijkstraLocation : ConnectableLocation<DijkstraLocation> 
         {
             public double Distance { get; set; } = double.MaxValue;
             public DijkstraLocation PreviousLocation { get; set; }
 
-            public DijkstraLocation(Location location)
+            public DijkstraLocation(ConnectableLocation<Location> location)
             {
                 Id = location.Id;
                 Longitude = location.Longitude;
                 Latitude = location.Latitude;
-                ConnectedLocations = location.ConnectedLocations;
             }
+           
         }
     }
 }
