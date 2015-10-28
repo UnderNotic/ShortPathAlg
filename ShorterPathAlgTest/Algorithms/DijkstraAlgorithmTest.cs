@@ -14,8 +14,13 @@ namespace ShorterPathAlgTest.Algorithms
             _alg = new DijkstraAlgorithm();
         }
 
-
         [Test]
+        public void Init_GoesCorrectly()
+        {
+        }
+
+
+    [Test]
         public void GetShortestPath_ReturnCorrectly()
         {
             var locations = LocationsForTesting.GetLocationsForTest();

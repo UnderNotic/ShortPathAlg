@@ -11,7 +11,7 @@ namespace ShorterPathAlg.Models
         public double Longitude { get; set; }
         public int Id { get; set; }
 
-        public HashSet<Location> ConnectedLocations { get; } = new HashSet<Location>();
+        public HashSet<Location> ConnectedLocations { get; protected set; } = new HashSet<Location>();
 
         private readonly IDictionary<Location, double> _connectedLocationsWithValues = new Dictionary<Location, double>();
         public IDictionary<Location, double> ConnectedLocationsWithValues

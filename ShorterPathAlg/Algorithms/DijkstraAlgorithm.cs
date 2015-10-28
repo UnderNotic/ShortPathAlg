@@ -13,64 +13,51 @@ namespace ShorterPathAlg.Algorithms
 
     public class DijkstraAlgorithm : IDijkstraAlgorithm
     {
-        private readonly IDictionary<Location, double> _pathValues = new Dictionary<Location, double>();
-        private Location _startingLocation;
-        private Location _destinationLocation;
-        private Location _currentLocation;
-        private readonly HashSet<Location> _checkedLocations = new HashSet<Location>();
-        private readonly List<Location> _shorterPath = new List<Location>();
+        private HashSet<DijkstraLocation> _locations;
 
-        public List<Location> GetShortestPath(IEnumerable<Location> locations, Location startingLocation,
-            Location destinationLocation)
+
+        public List<Location> GetShortestPath(IEnumerable<Location> locations, int startingLocation,
+            int destinationLocation)
         {
-            _startingLocation = startingLocation;
-            _destinationLocation = destinationLocation;
+            Init(locations, startingLocation);
 
-            InitPathValues(locations);
-
-            _pathValues[startingLocation] = 0;
-
-            _currentLocation = startingLocation;
-
-            for (int i = 0; i < _pathValues.Count; i++)
+            while (_locations.Any())
             {
-                _currentLocation = _pathValues.First(pair => !_checkedLocations.Contains(pair.Key) && Math.Abs(pair.Value - Double.MaxValue) > 0.5).Key;
-                _currentLocation.ConnectedLocationsWithValues.ForEach(pair =>
+                var loc = _locations.Aggregate((loc1, loc2) => loc1.Distance < loc2.Distance ? loc1 : loc2);
+                _locations.Remove(loc);
+
+                foreach (var connectedLocation in loc.ConnectedLocations)
                 {
-                    if (!_pathValues.ContainsKey(pair.Key))
-                    {
-                        _pathValues.Add(pair);
-                        _pathValues[pair.Key] += _pathValues[_currentLocation];
-                    }
-                    else
-                    {
-                        var newValue = pair.Value + _pathValues[_currentLocation];
-                        if (newValue < _pathValues[pair.Key]) _pathValues[pair.Key] = newValue;
-                    }
-                    _checkedLocations.Add(_currentLocation);
-                });
-            }
-            ComposeShorterPath();
+                    var distance = loc.Distance + loc.ComputeEuclidicDistance(connectedLocation);
+                    if(connectedLocation.)
+                }
 
-            return _shorterPath;
+            }
+
+            return null;
         }
 
-        private void ComposeShorterPath()
+        private void Init(IEnumerable<Location> locations, int startingLocationId)
         {
-            _shorterPath.Add(_destinationLocation);
-
-            Location currLocation = null;
-            while (currLocation != _startingLocation)
+            locations.ForEach(location =>
             {
-                currLocation = _pathValues.Where(pair => pair.Key.ConnectedLocations.Contains(_destinationLocation))
-                     .Aggregate((pair1, pair2) => pair1.Value < pair2.Value ? pair1 : pair2).Key;
-            }
-
+                DijkstraLocation locToAdd = location.Id == startingLocationId ? new DijkstraLocation(location) {Distance = 0} : new DijkstraLocation(location);
+                _locations.Add(locToAdd);
+            });
         }
 
-        private void InitPathValues(IEnumerable<Location> locations)
+        private class DijkstraLocation : Location
         {
-            locations.ForEach(location => _pathValues.Add(location, double.MaxValue));
+            public double Distance { get; set; } = double.MaxValue;
+            public DijkstraLocation PreviousLocation { get; set; }
+
+            public DijkstraLocation(Location location)
+            {
+                Id = location.Id;
+                Longitude = location.Longitude;
+                Latitude = location.Latitude;
+                ConnectedLocations = location.ConnectedLocations;
+            }
         }
     }
 }
