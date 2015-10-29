@@ -9,6 +9,7 @@ namespace ShorterPathAlg.Providers
     public interface IRandomGraphGenerator
     {
         void GenerateRandomPaths(IEnumerable<ConnectableLocation<Location>> locations);
+        void GenerateRandomTwoWaysPaths(IEnumerable<ConnectableLocation<Location>> locations);
     }
 
     public class RandomGraphGenerator : IRandomGraphGenerator
@@ -21,6 +22,28 @@ namespace ShorterPathAlg.Providers
             GenerateBasicCyclicGraph();
             AddRandomPaths();
         }
+
+        public void GenerateRandomTwoWaysPaths(IEnumerable<ConnectableLocation<Location>> locations)
+        {
+            _locations = locations;
+            GenerateBasicCyclicGraph();
+            AddRandomPaths();
+            AddPathsForSecondWay();
+        }
+
+        private void AddPathsForSecondWay()
+        {
+            _locations.ForEach(location =>
+            {
+                location.ConnectedLocations.ForEach(location1 =>
+                {
+                    _locations.First(connectableLocation => connectableLocation.Equals(location1))
+                        .ConnectedLocations.Add(location);
+                });
+
+            });
+        }
+
 
         private void AddRandomPaths()
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ShorterPathAlg.Models;
 using ShorterPathAlg.Providers;
 
@@ -30,10 +31,25 @@ namespace ShorterPathAlgTest
                 }
             };
 
-            var gen = new RandomGraphGenerator();
-
-            gen.GenerateRandomPaths(locations);
             return locations;
-        } 
+        }
+
+        public static void AddAnotherLocations(IList<ConnectableLocation<Location>> locs, int numberOfLocationsToAdd = 1)
+        {
+            var id = locs.Max(location => location.Id);
+
+            for (int i = 0; i < numberOfLocationsToAdd; i++)
+            {
+                var longitude = 6%(i + 1);
+                var latitude = 6%(i + 1);
+
+                locs.Add(new ConnectableLocation<Location>
+                {
+                    Id = ++id,
+                    Latitude = latitude,
+                    Longitude = longitude
+                });
+            }
+        }
     }
 }

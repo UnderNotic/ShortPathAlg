@@ -10,27 +10,27 @@ namespace ShorterPathAlgTest.Providers
     public class RandomGraphGeneratorTest
     {
         private RandomGraphGenerator _generator;
-        private IEnumerable<Location> _locations;
+        private IEnumerable<ConnectableLocation<Location>> _locations;
 
         [SetUp]
         public void Init()
         {
             _generator = new RandomGraphGenerator();
-            _locations = new List<Location>
+            _locations = new List<ConnectableLocation<Location>>
             {
-                new Location
+                new ConnectableLocation<Location>
                 {
                     Id = 1,
                     Longitude = 3,
                     Latitude = -4
                 },
-                new Location
+                new ConnectableLocation<Location>
                 {
                     Id = 2,
                     Longitude = -2,
                     Latitude = -3
                 },
-                new Location
+                new ConnectableLocation<Location>
                 {
                     Id = 3,
                     Longitude = 0,
@@ -40,10 +40,26 @@ namespace ShorterPathAlgTest.Providers
         }
 
         [Test]
-        public void GenerateRandomPaths_ReturnCorrectly() 
+        public void GenerateRandomPaths_ReturnCorrectly()
         {
             _generator.GenerateRandomPaths(_locations);
-            Assert.IsTrue(_locations.All(location => location.ConnectedLocations.Count >= 1));    
+            Assert.IsTrue(_locations.All(location => location.ConnectedLocations.Count >= 1));
         }
+
+        [Test]
+        public void GenerateRandomTwoWaysPaths_ReturnsCorrectly()
+        {
+            _generator.GenerateRandomTwoWaysPaths(_locations);
+
+            var loc1 = _locations.First().ConnectedLocations.First();
+            var asset =
+                _locations.First(location => location.Equals(loc1))
+                    .ConnectedLocations.Any(location => location.Equals(loc1));
+
+            Assert.IsTrue(asset);
+        }
+
+
+
     }
 }

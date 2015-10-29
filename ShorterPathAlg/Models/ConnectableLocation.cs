@@ -26,7 +26,6 @@ namespace ShorterPathAlg.Models
             return (decimal)result == 0 ? int.MaxValue : roundedResult;
         }
 
-
         public static void MapConnectedLocations(IEnumerable<ConnectableLocation<T>> notConnectedLocations, IEnumerable<ConnectableLocation<Location>> connectedLocations)
         {
             connectedLocations.ForEach(location =>
@@ -34,8 +33,10 @@ namespace ShorterPathAlg.Models
                 var notConnected = notConnectedLocations.First(loc => loc.Equals(location));
                 var connections = location.ConnectedLocations;
                 var toAdd = notConnectedLocations.Where(
-                            connectableLocation => connections.Any(location1 => location1.Equals(connectableLocation)));
-              //TODO
+                    connectableLocation => connections.Any(location1 => location1.Equals(connectableLocation)))
+                    .Select(connectableLocation => connectableLocation as T);
+
+                notConnected.ConnectedLocations = new HashSet<T>(toAdd);
             });
         }
     }

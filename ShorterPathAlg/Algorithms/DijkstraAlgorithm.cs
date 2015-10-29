@@ -13,16 +13,19 @@ namespace ShorterPathAlg.Algorithms
 
     public class DijkstraAlgorithm : IDijkstraAlgorithm
     {
-        private HashSet<DijkstraLocation> _locations;
+        private readonly HashSet<DijkstraLocation> _dijkstraLocations = new HashSet<DijkstraLocation>();
 
         public List<Location> GetShortestPath(IEnumerable<ConnectableLocation<Location>> locations, int startingLocation,
             int destinationLocation)
         {
+            if (startingLocation == destinationLocation) throw new ArgumentException("Starting location cannot be the same as destination location");
+          
             Init(locations, startingLocation);
 
             var destLocation = ExecuteAlgorithm(destinationLocation);
 
             var stack = GetShorterPath(destLocation);
+            if (stack.Count == 1) throw new ArgumentException("Cannot find path beetwen locations");
 
             return stack.ToList();
         }
@@ -39,23 +42,23 @@ namespace ShorterPathAlg.Algorithms
             return stack;
         }
 
+        //TODO throw somethere exception if there is no path 
         private DijkstraLocation ExecuteAlgorithm(int destinationLocationId)
         {
-            while (_locations.Any())
+            while (_dijkstraLocations.Any())
             {
-                var lastLocation = _locations.Aggregate((loc1, loc2) => loc1.Distance < loc2.Distance ? loc1 : loc2);
+                var lastLocation = _dijkstraLocations.Aggregate((loc1, loc2) => loc1.Distance < loc2.Distance ? loc1 : loc2);
                 if (lastLocation.Id == destinationLocationId) return lastLocation;
-                _locations.Remove(lastLocation);
+                _dijkstraLocations.Remove(lastLocation);
 
                 foreach (var connectedLocation in lastLocation.ConnectedLocations)
                 {
                     var distance = lastLocation.Distance + lastLocation.ComputeEuclidicDistance(connectedLocation);
 
-                    var dijkstraLocation = connectedLocation;
-                    if (dijkstraLocation.Distance > distance)
+                    if (connectedLocation.Distance > distance)
                     {
-                        dijkstraLocation.Distance = distance;
-                        dijkstraLocation.PreviousLocation = lastLocation;
+                        connectedLocation.Distance = distance;
+                        connectedLocation.PreviousLocation = lastLocation;
                     }
                 }
             }
@@ -67,10 +70,10 @@ namespace ShorterPathAlg.Algorithms
             locations.ForEach(location =>
             {
                 DijkstraLocation locToAdd = location.Id == startingLocationId ? new DijkstraLocation(location) {Distance = 0} : new DijkstraLocation(location);
-                _locations.Add(locToAdd);
+                _dijkstraLocations.Add(locToAdd);
             });
 
-            DijkstraLocation.MapConnectedLocations(_locations, locations);
+            DijkstraLocation.MapConnectedLocations(_dijkstraLocations, locations);
         }
 
         private class DijkstraLocation : ConnectableLocation<DijkstraLocation> 

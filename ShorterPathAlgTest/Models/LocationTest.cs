@@ -7,19 +7,19 @@ namespace ShorterPathAlgTest.Models
     [TestFixture]
     public class LocationTest
     {
-        private Location _location;
+        private ConnectableLocation<Location> _location;
         
 
         [SetUp]
         public void Init()
         {
-        _location = new Location {Latitude = 2, Longitude = 4};    
+        _location = new ConnectableLocation<Location>{ Latitude = 2, Longitude = 4};    
         }
 
         [Test]
         public void ComputeEuclidicDistance_ReturnsCorrectly()
         {
-            var loc2 = new Location {Latitude = 1, Longitude = 3};
+            var loc2 = new ConnectableLocation<Location> {Latitude = 1, Longitude = 3};
 
             var result = _location.ComputeEuclidicDistance(loc2);
 
@@ -29,13 +29,13 @@ namespace ShorterPathAlgTest.Models
         [Test]
         public void GetConnectedLocationsWithValues_ReturnsCorrectly()
         {
-            var loc1 = new Location()
+            var loc1 = new ConnectableLocation<Location>
             {
                 Id = 1,
                 Longitude = 4,
                 Latitude = 7
             };
-            var loc2 = new Location()
+            var loc2 = new ConnectableLocation<Location>
             {
                 Id = 2,
                 Longitude = 3,
