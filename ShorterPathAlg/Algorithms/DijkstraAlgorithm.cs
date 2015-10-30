@@ -6,7 +6,6 @@ using ShorterPathAlg.Models;
 
 namespace ShorterPathAlg.Algorithms
 {
-
     public interface IDijkstraAlgorithm : IShorterPathAlgorithm
     {
     }
@@ -15,7 +14,7 @@ namespace ShorterPathAlg.Algorithms
     {
         private readonly HashSet<DijkstraLocation> _dijkstraLocations = new HashSet<DijkstraLocation>();
 
-        public List<Location> GetShortestPath(IEnumerable<ConnectableLocation<Location>> locations, int startingLocation,
+        public List<Location> GetShortestPath(HashSet<ConnectableLocation<Location>> locations, int startingLocation,
             int destinationLocation)
         {
             if (startingLocation == destinationLocation) throw new ArgumentException("Starting location cannot be the same as destination location");
@@ -65,18 +64,17 @@ namespace ShorterPathAlg.Algorithms
             return null; //this should never happen, only when destinationId is not in graph
         }
 
-        private void Init(IEnumerable<ConnectableLocation<Location>> locations, int startingLocationId)
+        private void Init(HashSet<ConnectableLocation<Location>> locations, int startingLocationId)
         {
             locations.ForEach(location =>
             {
                 DijkstraLocation locToAdd = location.Id == startingLocationId ? new DijkstraLocation(location) {Distance = 0} : new DijkstraLocation(location);
                 _dijkstraLocations.Add(locToAdd);
             });
-
             DijkstraLocation.MapConnectedLocations(_dijkstraLocations, locations);
         }
 
-        private class DijkstraLocation : ConnectableLocation<DijkstraLocation> 
+        private class DijkstraLocation : ConnectableLocation<DijkstraLocation>
         {
             public double Distance { get; set; } = double.MaxValue;
             public DijkstraLocation PreviousLocation { get; set; }

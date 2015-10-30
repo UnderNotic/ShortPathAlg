@@ -8,64 +8,60 @@ namespace ShorterPathAlg.Providers
 {
     public interface IRandomGraphGenerator
     {
-        void GenerateRandomPaths(IEnumerable<ConnectableLocation<Location>> locations);
-        void GenerateRandomTwoWaysPaths(IEnumerable<ConnectableLocation<Location>> locations);
+        void GenerateRandomPaths(ICollection<ConnectableLocation<Location>> locations);
+        void GenerateRandomTwoWaysPaths(ICollection<ConnectableLocation<Location>> locations);
     }
 
     public class RandomGraphGenerator : IRandomGraphGenerator
     {
-        private IEnumerable<ConnectableLocation<Location>> _locations; 
-
-        public void GenerateRandomPaths(IEnumerable<ConnectableLocation<Location>> locations)
+        public void GenerateRandomPaths(ICollection<ConnectableLocation<Location>> locations)
         {
-            _locations = locations;
-            GenerateBasicCyclicGraph();
-            AddRandomPaths();
+            GenerateBasicCyclicGraph(locations);
+            AddRandomPaths(locations);
         }
 
-        public void GenerateRandomTwoWaysPaths(IEnumerable<ConnectableLocation<Location>> locations)
+        public void GenerateRandomTwoWaysPaths(ICollection<ConnectableLocation<Location>> locations)
         {
-            _locations = locations;
-            GenerateBasicCyclicGraph();
-            AddRandomPaths();
-            AddPathsForSecondWay();
+            GenerateBasicCyclicGraph(locations);
+            AddRandomPaths(locations);
+            AddPathsForSecondWay(locations);
         }
 
-        private void AddPathsForSecondWay()
+        private void AddPathsForSecondWay(ICollection<ConnectableLocation<Location>> locations)
         {
-            _locations.ForEach(location =>
+            locations.ForEach(location =>
             {
                 location.ConnectedLocations.ForEach(location1 =>
                 {
-                    _locations.First(connectableLocation => connectableLocation.Equals(location1))
-                        .ConnectedLocations.Add(location);
+                    locations.Where(connectableLocation => connectableLocation.Equals(location1))
+                        .ForEach(connectableLocation2 => connectableLocation2.ConnectedLocations.Add(location));
                 });
 
             });
         }
 
 
-        private void AddRandomPaths()
+        private void AddRandomPaths(ICollection<ConnectableLocation<Location>> locations)
         {
             var rnd = new Random();
 
-            _locations.ForEach(location =>
+            locations.ForEach(location =>
             {
                 for (int i = 0; i < rnd.Next(0, 3); i++)
                 {
-                   location.ConnectedLocations.Add(_locations.ElementAt(rnd.Next(0, _locations.Count())));
+                    location.ConnectedLocations.Add(locations.ElementAt(rnd.Next(0, locations.Count())));
                 }
             });
         }
 
-        private void GenerateBasicCyclicGraph()
+        private void GenerateBasicCyclicGraph(ICollection<ConnectableLocation<Location>> locations)
         {
-            _locations.ForEach(location => location.ConnectedLocations.Add(GetClosestLocation(location)));
+            locations.ForEach(location => location.ConnectedLocations.Add(GetClosestLocation(locations, location)));
         }
 
-        private Location GetClosestLocation(ConnectableLocation<Location> location)
+        private ConnectableLocation<Location> GetClosestLocation(ICollection<ConnectableLocation<Location>> locations, ConnectableLocation<Location> location)
         {
-            return _locations.Aggregate((loc1, loc2) => location.ComputeEuclidicDistance(loc1) < location.ComputeEuclidicDistance(loc2) ? loc1 : loc2);
+            return locations.Aggregate((loc1, loc2) => location.ComputeEuclidicDistance(loc1) < location.ComputeEuclidicDistance(loc2) ? loc1 : loc2);
         }
     }
 }

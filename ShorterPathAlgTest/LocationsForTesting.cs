@@ -7,9 +7,9 @@ namespace ShorterPathAlgTest
 {
     public static class LocationsForTesting
     {
-         public static IEnumerable<ConnectableLocation<Location>> GetLocationsForTest()
+         public static HashSet<ConnectableLocation<Location>> GetLocationsForTest()
         {
-            var locations = new List<ConnectableLocation<Location>>
+            var locations = new HashSet<ConnectableLocation<Location>>
             {
                 new ConnectableLocation<Location>
                 {
@@ -34,7 +34,7 @@ namespace ShorterPathAlgTest
             return locations;
         }
 
-        public static void AddAnotherLocations(IList<ConnectableLocation<Location>> locs, int numberOfLocationsToAdd = 1)
+        public static void AddAnotherLocations(HashSet<ConnectableLocation<Location>> locs, int numberOfLocationsToAdd = 1)
         {
             var id = locs.Max(location => location.Id);
 

@@ -10,13 +10,13 @@ namespace ShorterPathAlgTest.Providers
     public class RandomGraphGeneratorTest
     {
         private RandomGraphGenerator _generator;
-        private IEnumerable<ConnectableLocation<Location>> _locations;
+        private ICollection<ConnectableLocation<Location>> _locations;
 
         [SetUp]
         public void Init()
         {
             _generator = new RandomGraphGenerator();
-            _locations = new List<ConnectableLocation<Location>>
+            _locations = new HashSet<ConnectableLocation<Location>>
             {
                 new ConnectableLocation<Location>
                 {
@@ -52,11 +52,11 @@ namespace ShorterPathAlgTest.Providers
             _generator.GenerateRandomTwoWaysPaths(_locations);
 
             var loc1 = _locations.First().ConnectedLocations.First();
-            var asset =
-                _locations.First(location => location.Equals(loc1))
+            var assert =
+                loc1..First(location => location.Equals(loc1))
                     .ConnectedLocations.Any(location => location.Equals(loc1));
 
-            Assert.IsTrue(asset);
+            Assert.IsTrue(assert);
         }
 
 
