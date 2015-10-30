@@ -5,7 +5,7 @@ using WebGrease.Css.Extensions;
 
 namespace ShorterPathAlg.Models
 {
-    public class ConnectableLocation<T> : Location where T : Location
+    public abstract class ConnectableLocation<T> : BaseLocation where T : BaseLocation
     {
         public HashSet<T> ConnectedLocations { get; protected set; } = new HashSet<T>();
 
@@ -26,7 +26,7 @@ namespace ShorterPathAlg.Models
             return (decimal)result == 0 ? int.MaxValue : roundedResult;
         }
 
-        public static void MapConnectedLocations(IEnumerable<ConnectableLocation<T>> notConnectedLocations, IEnumerable<ConnectableLocation<Location>> connectedLocations)
+        public static void MapConnectedLocations(IEnumerable<ConnectableLocation<T>> notConnectedLocations, IEnumerable<ConnectableLocation<BaseLocation>> connectedLocations)
         {
             connectedLocations.ForEach(location =>
             {

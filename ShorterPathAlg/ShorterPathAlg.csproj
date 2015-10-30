@@ -175,6 +175,7 @@
     </Compile>
     <Compile Include="Models\ConnectableLocation.cs" />
     <Compile Include="Models\CsvLocation.cs" />
+    <Compile Include="Models\BaseLocation.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CsvFileReader.cs" />

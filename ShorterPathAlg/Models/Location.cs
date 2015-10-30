@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace ShorterPathAlg.Models
+﻿namespace ShorterPathAlg.Models
 {
-    public class Location : IEquatable<Location>
+    public class Location : ConnectableLocation<Location>
     {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public int Id { get; set; }
-
-        public bool Equals(Location other)
+        public Location(int id, double latitude, double longitude)
         {
-            return Id.Equals(other.Id);
-        }
-
-        public override int GetHashCode()
-        {
-            return 37 * 166777 ^ Id.GetHashCode();
+            Id = id;
+            Latitude = latitude;
+            Longitude = longitude;
         }
     }
 }
