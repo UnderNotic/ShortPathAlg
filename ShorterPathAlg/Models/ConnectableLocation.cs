@@ -26,7 +26,8 @@ namespace ShorterPathAlg.Models
             return (decimal)result == 0 ? int.MaxValue : roundedResult;
         }
 
-        public static void MapConnectedLocations(IEnumerable<ConnectableLocation<T>> notConnectedLocations, IEnumerable<ConnectableLocation<BaseLocation>> connectedLocations)
+        public static void MapConnectedLocations<TConnected>(IEnumerable<ConnectableLocation<T>> notConnectedLocations,
+            IEnumerable<ConnectableLocation<TConnected>> connectedLocations) where TConnected : BaseLocation
         {
             connectedLocations.ForEach(location =>
             {

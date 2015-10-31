@@ -35,7 +35,7 @@ namespace ShorterPathAlg.Algorithms
 
             while (destLocation != null)
             {
-                stack.Push(destLocation);
+                stack.Push(destLocation.ToLocation());
                 destLocation = destLocation.PreviousLocation;
             }
             return stack;
@@ -84,6 +84,13 @@ namespace ShorterPathAlg.Algorithms
                 Id = location.Id;
                 Longitude = location.Longitude;
                 Latitude = location.Latitude;
+            }
+
+            public Location ToLocation()
+            {
+                var location = new Location(Id, Latitude, Longitude);
+                MapConnectedLocations(ConnectedLocations, location.ConnectedLocations);
+                return location;
             }
            
         }
