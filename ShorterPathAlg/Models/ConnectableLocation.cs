@@ -40,5 +40,9 @@ namespace ShorterPathAlg.Models
                 notConnected.ConnectedLocations = new HashSet<T>(toAdd);
             });
         }
+
+        public ConnectableLocation(int id) : base(id)
+        {
+        }
     }
 }

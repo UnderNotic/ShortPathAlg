@@ -7,34 +7,34 @@ namespace ShorterPathAlgTest
 {
     public static class LocationsForTesting
     {
-         public static HashSet<ConnectableLocation<Location>> GetLocationsForTest()
+         public static HashSet<Location> GetLocationsForTest()
         {
-            var locations = new HashSet<ConnectableLocation<Location>>
+            var locations = new HashSet<Location>
             {
-                new ConnectableLocation<Location>
-                {
-                    Id = 1,
-                    Longitude = 3,
-                    Latitude = -4
-                },
-                new ConnectableLocation<Location>
-                {
-                    Id = 2,
-                    Longitude = -2,
-                    Latitude = -3
-                },
-                new ConnectableLocation<Location>
-                {
-                    Id = 3,
-                    Longitude = 0,
-                    Latitude = 3
-                }
+                new Location
+                (
+                    id : 1,
+                    longitude : 3,
+                    latitude : -4
+                ),
+                new Location
+                (
+                    id : 2,
+                    longitude : -2,
+                    latitude : -3
+                ),
+                new Location
+                (
+                    id : 3,
+                    longitude : 0,
+                    latitude : 3
+                )
             };
 
             return locations;
         }
 
-        public static void AddAnotherLocations(HashSet<ConnectableLocation<Location>> locs, int numberOfLocationsToAdd = 1)
+        public static void AddAnotherLocations(HashSet<Location> locs, int numberOfLocationsToAdd = 1)
         {
             var id = locs.Max(location => location.Id);
 
@@ -43,12 +43,12 @@ namespace ShorterPathAlgTest
                 var longitude = 6%(i + 1);
                 var latitude = 6%(i + 1);
 
-                locs.Add(new ConnectableLocation<Location>
-                {
-                    Id = ++id,
-                    Latitude = latitude,
-                    Longitude = longitude
-                });
+                locs.Add(new Location
+                (
+                    id : ++id,
+                    latitude : latitude,
+                    longitude : longitude
+                ));
             }
         }
     }

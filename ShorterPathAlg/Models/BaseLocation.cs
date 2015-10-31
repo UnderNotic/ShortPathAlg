@@ -10,6 +10,10 @@ namespace ShorterPathAlg.Models
         public double Longitude { get; set; }
         public int Id { get; protected set; }
 
+        public BaseLocation(int id)
+        {
+            Id = id;
+        }
         public bool Equals(BaseLocation other)
         {
             return Id.Equals(other.Id);

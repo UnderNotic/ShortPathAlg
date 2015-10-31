@@ -54,6 +54,7 @@
     <Compile Include="Algorithms\DijkstraAlgorithmTest.cs" />
     <Compile Include="LocationsForTesting.cs" />
     <Compile Include="Models\LocationTest.cs" />
+    <Compile Include="Providers\CsvFileReaderTest.cs" />
     <Compile Include="Providers\RandomGraphGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>

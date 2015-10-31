@@ -10,32 +10,32 @@ namespace ShorterPathAlgTest.Providers
     public class RandomGraphGeneratorTest
     {
         private RandomGraphGenerator _generator;
-        private ICollection<ConnectableLocation<Location>> _locations;
+        private ICollection<Location> _locations;
 
         [SetUp]
         public void Init()
         {
             _generator = new RandomGraphGenerator();
-            _locations = new HashSet<ConnectableLocation<Location>>
+            _locations = new HashSet<Location>
             {
-                new ConnectableLocation<Location>
-                {
-                    Id = 1,
-                    Longitude = 3,
-                    Latitude = -4
-                },
-                new ConnectableLocation<Location>
-                {
-                    Id = 2,
-                    Longitude = -2,
-                    Latitude = -3
-                },
-                new ConnectableLocation<Location>
-                {
-                    Id = 3,
-                    Longitude = 0,
-                    Latitude = 3
-                }
+                new Location
+                (
+                    id : 1,
+                    longitude : 3,
+                    latitude : -4
+                ),
+                new Location
+                (
+                    id : 2,
+                    longitude : -2,
+                    latitude : -3
+                ),
+                new Location
+                (
+                    id : 3,
+                    longitude : 0,
+                    latitude : 3
+                )
             };
         }
 
@@ -53,7 +53,7 @@ namespace ShorterPathAlgTest.Providers
 
             var loc1 = _locations.First().ConnectedLocations.First();
             var assert =
-                loc1..First(location => location.Equals(loc1))
+                loc1.ConnectedLocations.First(location => location.Equals(loc1))
                     .ConnectedLocations.Any(location => location.Equals(loc1));
 
             Assert.IsTrue(assert);

@@ -8,26 +8,26 @@ namespace ShorterPathAlg.Providers
 {
     public interface IRandomGraphGenerator
     {
-        void GenerateRandomPaths(ICollection<ConnectableLocation<Location>> locations);
-        void GenerateRandomTwoWaysPaths(ICollection<ConnectableLocation<Location>> locations);
+        void GenerateRandomPaths(ICollection<Location> locations);
+        void GenerateRandomTwoWaysPaths(ICollection<Location> locations);
     }
 
     public class RandomGraphGenerator : IRandomGraphGenerator
     {
-        public void GenerateRandomPaths(ICollection<ConnectableLocation<Location>> locations)
+        public void GenerateRandomPaths(ICollection<Location> locations)
         {
             GenerateBasicCyclicGraph(locations);
             AddRandomPaths(locations);
         }
 
-        public void GenerateRandomTwoWaysPaths(ICollection<ConnectableLocation<Location>> locations)
+        public void GenerateRandomTwoWaysPaths(ICollection<Location> locations)
         {
             GenerateBasicCyclicGraph(locations);
             AddRandomPaths(locations);
             AddPathsForSecondWay(locations);
         }
 
-        private void AddPathsForSecondWay(ICollection<ConnectableLocation<Location>> locations)
+        private void AddPathsForSecondWay(ICollection<Location> locations)
         {
             locations.ForEach(location =>
             {
@@ -41,7 +41,7 @@ namespace ShorterPathAlg.Providers
         }
 
 
-        private void AddRandomPaths(ICollection<ConnectableLocation<Location>> locations)
+        private void AddRandomPaths(ICollection<Location> locations)
         {
             var rnd = new Random();
 
@@ -54,12 +54,12 @@ namespace ShorterPathAlg.Providers
             });
         }
 
-        private void GenerateBasicCyclicGraph(ICollection<ConnectableLocation<Location>> locations)
+        private void GenerateBasicCyclicGraph(ICollection<Location> locations)
         {
             locations.ForEach(location => location.ConnectedLocations.Add(GetClosestLocation(locations, location)));
         }
 
-        private ConnectableLocation<Location> GetClosestLocation(ICollection<ConnectableLocation<Location>> locations, ConnectableLocation<Location> location)
+        private Location GetClosestLocation(ICollection<Location> locations, Location location)
         {
             return locations.Aggregate((loc1, loc2) => location.ComputeEuclidicDistance(loc1) < location.ComputeEuclidicDistance(loc2) ? loc1 : loc2);
         }

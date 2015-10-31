@@ -2,9 +2,8 @@
 {
     public class Location : ConnectableLocation<Location>
     {
-        public Location(int id, double latitude, double longitude)
+        public Location(int id, double latitude, double longitude) : base(id)
         {
-            Id = id;
             Latitude = latitude;
             Longitude = longitude;
         }

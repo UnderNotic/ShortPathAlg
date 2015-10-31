@@ -7,10 +7,11 @@ using ShorterPathAlg.Models;
 
 namespace ShorterPathAlgTest.Algorithms
 {
+    [TestFixture]
     public class DijkstraAlgorithmTest
     {
         private IDijkstraAlgorithm _alg;
-        private HashSet<ConnectableLocation<Location>> _locations;
+        private HashSet<Location> _locations;
 
         [SetUp]
         public void Init()

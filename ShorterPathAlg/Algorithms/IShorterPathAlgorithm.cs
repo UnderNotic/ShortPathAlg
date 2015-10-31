@@ -5,6 +5,6 @@ namespace ShorterPathAlg.Algorithms
 {
     public interface IShorterPathAlgorithm
     {
-        List<Location> GetShortestPath(HashSet<ConnectableLocation<Location>> locations, int startingLocationId, int destinationLocationId);
+        List<Location> GetShortestPath(HashSet<Location> locations, int startingLocationId, int destinationLocationId);
     }
 }

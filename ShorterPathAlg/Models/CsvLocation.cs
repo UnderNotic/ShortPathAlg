@@ -19,5 +19,9 @@
         public string Timezone { get; set; }
         public int CurrentTimezoneOffset { get; set; }
         public string OlsonTimezone { get; set; }
+
+        public CsvLocation(int id) : base(id)
+        {
+        }
     }
 }

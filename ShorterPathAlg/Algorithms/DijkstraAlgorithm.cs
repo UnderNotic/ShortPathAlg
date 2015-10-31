@@ -14,7 +14,7 @@ namespace ShorterPathAlg.Algorithms
     {
         private readonly HashSet<DijkstraLocation> _dijkstraLocations = new HashSet<DijkstraLocation>();
 
-        public List<Location> GetShortestPath(HashSet<ConnectableLocation<Location>> locations, int startingLocation,
+        public List<Location> GetShortestPath(HashSet<Location> locations, int startingLocation,
             int destinationLocation)
         {
             if (startingLocation == destinationLocation) throw new ArgumentException("Starting location cannot be the same as destination location");
@@ -64,7 +64,7 @@ namespace ShorterPathAlg.Algorithms
             return null; //this should never happen, only when destinationId is not in graph
         }
 
-        private void Init(HashSet<ConnectableLocation<Location>> locations, int startingLocationId)
+        private void Init(HashSet<Location> locations, int startingLocationId)
         {
             locations.ForEach(location =>
             {
@@ -79,9 +79,8 @@ namespace ShorterPathAlg.Algorithms
             public double Distance { get; set; } = double.MaxValue;
             public DijkstraLocation PreviousLocation { get; set; }
 
-            public DijkstraLocation(ConnectableLocation<Location> location)
+            public DijkstraLocation(ConnectableLocation<Location> location) : base(location.Id)
             {
-                Id = location.Id;
                 Longitude = location.Longitude;
                 Latitude = location.Latitude;
             }

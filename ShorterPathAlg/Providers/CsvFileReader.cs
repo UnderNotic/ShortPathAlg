@@ -24,9 +24,8 @@ namespace ShorterPathAlg.Providers
         public IEnumerable<CsvLocation> GetLocations()
         {
            return
-                File.ReadAllLines(_pathToFile).Skip(1).Select(s => s.Split(',')).Select(strings => new CsvLocation()
+                File.ReadAllLines(_pathToFile).Skip(1).Select(s => s.Split(',')).Select(strings => new CsvLocation(int.Parse(strings[0]))
                 {
-                    Id = int.Parse(strings[0]),
                     Name = strings[1],
                     Brand = strings[1],
                     StoreNumber = strings[2],
