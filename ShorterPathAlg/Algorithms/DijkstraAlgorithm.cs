@@ -24,7 +24,7 @@ namespace ShorterPathAlg.Algorithms
             var destLocation = ExecuteAlgorithm(destinationLocation);
 
             var stack = GetShorterPath(destLocation);
-            if (stack.Count == 1) throw new ArgumentException("Cannot find path beetwen locations");
+            if (stack.Count == 1 || stack.First().Id != startingLocation) throw new ArgumentException("Cannot find path beetwen locations");
 
             return stack.ToList();
         }
