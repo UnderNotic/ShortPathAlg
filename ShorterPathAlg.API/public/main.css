@@ -1,0 +1,13 @@
+﻿html, body {
+    margin: 0;
+    background: darkslategray;
+    color: whitesmoke;
+    font-family: 'Tangerine', serif;
+    font-size: 58px;
+}
+
+
+
+canvas {
+    display: inline-block;
+}

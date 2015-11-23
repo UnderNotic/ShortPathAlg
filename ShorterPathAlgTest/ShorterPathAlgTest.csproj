@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShorterPathAlgTest</RootNamespace>
     <AssemblyName>ShorterPathAlgTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -58,8 +59,8 @@
     <Compile Include="Providers\RandomGraphGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ShorterPathAlg\ShorterPathAlg.csproj">
-      <Project>{37603416-726B-40FC-A70A-FD7ACA0D9D6B}</Project>
+    <ProjectReference Include="..\ShorterPathAlg.API\ShorterPathAlg.csproj">
+      <Project>{c5647cc2-9de9-4c6c-b02b-22b5b2d0684f}</Project>
       <Name>ShorterPathAlg</Name>
     </ProjectReference>
   </ItemGroup>
