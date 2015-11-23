@@ -1,4 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using System.IdentityModel.Tokens;
+using System.Reflection;
+using Autofac;
+using Autofac.Integration.WebApi;
+using Microsoft.Owin;
 using ShorterPathAlg;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -27,6 +31,18 @@ namespace ShorterPathAlg
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            var builder = new ContainerBuilder();
+
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            Bootstrap(builder);
+
+            var container = builder.Build();
+            httpConfiguration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(httpConfiguration);
             app.UseWebApi(httpConfiguration);
 
             // Make ./public the default root of the static files in our Web Application.
@@ -38,6 +54,11 @@ namespace ShorterPathAlg
             });
 
             app.UseStageMarker(PipelineStage.MapHandler);
+        }
+
+        private void Bootstrap(ContainerBuilder builder)
+        {
+
         }
     }
 }
