@@ -124,9 +124,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="public\app.js" />
+    <Content Include="public\scripts\app.js" />
     <Content Include="public\index.html" />
-    <Content Include="public\main.css" />
+    <Content Include="public\css\main.css" />
+    <Content Include="public\scripts\location.js" />
+    <Content Include="public\scripts\require.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

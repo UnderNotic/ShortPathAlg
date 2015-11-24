@@ -1,4 +1,6 @@
-﻿$(window).resize(function () { window.resize(); });
+﻿//dev version (need to run through babel, modernizr, uglify for prod)
+
+$(window).resize(function () { window.resize(); });
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
