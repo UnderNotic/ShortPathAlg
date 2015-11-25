@@ -41,7 +41,11 @@ namespace ShorterPathAlg.Models
             });
         }
 
-        public ConnectableLocation(int id) : base(id)
+        protected ConnectableLocation()
+        {
+        }
+
+        protected ConnectableLocation(string id) : base(id)
         {
         }
     }

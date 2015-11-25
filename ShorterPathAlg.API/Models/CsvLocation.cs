@@ -20,7 +20,7 @@
         public int CurrentTimezoneOffset { get; set; }
         public string OlsonTimezone { get; set; }
 
-        public CsvLocation(int id) : base(id)
+        public CsvLocation(int id) : base(id.ToString())
         {
         }
     }

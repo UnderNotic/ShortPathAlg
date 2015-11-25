@@ -30,6 +30,9 @@
             return false;
         }
 
+        getHashcode() {
+            return this.x.toString().concat(this.y.toString());
+        }
     }
 
     return makeLocation = () => new location();

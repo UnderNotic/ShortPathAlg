@@ -6,9 +6,14 @@ namespace ShorterPathAlg.Models
     {
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-        public int Id { get; protected set; }
+        public string Id { get; }
 
-        public BaseLocation(int id)
+        protected BaseLocation()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
+        protected BaseLocation(string id)
         {
             Id = id;
         }
@@ -19,7 +24,7 @@ namespace ShorterPathAlg.Models
 
         public override int GetHashCode()
         {
-            return 37 * 166777 ^ Id.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

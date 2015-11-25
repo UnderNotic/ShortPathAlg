@@ -14,8 +14,8 @@ namespace ShorterPathAlg.Algorithms
     {
         private readonly HashSet<DijkstraLocation> _dijkstraLocations = new HashSet<DijkstraLocation>();
 
-        public List<Location> GetShortestPath(HashSet<Location> locations, int startingLocation,
-            int destinationLocation)
+        public List<Location> GetShortestPath(HashSet<Location> locations, string startingLocation,
+            string destinationLocation)
         {
             if (startingLocation == destinationLocation) throw new ArgumentException("Starting location cannot be the same as destination location");
           
@@ -42,7 +42,7 @@ namespace ShorterPathAlg.Algorithms
         }
 
         //TODO throw somethere exception if there is no path 
-        private DijkstraLocation ExecuteAlgorithm(int destinationLocationId)
+        private DijkstraLocation ExecuteAlgorithm(string destinationLocationId)
         {
             while (_dijkstraLocations.Any())
             {
@@ -64,7 +64,7 @@ namespace ShorterPathAlg.Algorithms
             return null; //this should never happen, only when destinationId is not in graph
         }
 
-        private void Init(HashSet<Location> locations, int startingLocationId)
+        private void Init(HashSet<Location> locations, string startingLocationId)
         {
             locations.ForEach(location =>
             {

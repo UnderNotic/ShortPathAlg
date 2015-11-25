@@ -20,19 +20,19 @@ namespace ShorterPathAlgTest.Providers
             {
                 new Location
                 (
-                    id : 1,
+                    id : 1.ToString(),
                     longitude : 3,
                     latitude : -4
                 ),
                 new Location
                 (
-                    id : 2,
+                    id : 2.ToString(),
                     longitude : -2,
                     latitude : -3
                 ),
                 new Location
                 (
-                    id : 3,
+                    id : 3.ToString(),
                     longitude : 0,
                     latitude : 3
                 )

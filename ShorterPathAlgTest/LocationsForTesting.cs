@@ -13,43 +13,43 @@ namespace ShorterPathAlgTest
             {
                 new Location
                 (
-                    id : 1,
+                    id : 1.ToString(),
                     longitude : 3,
                     latitude : -4
                 ),
                 new Location
                 (
-                    id : 2,
+                    id : 2.ToString(),
                     longitude : -2,
                     latitude : -3
                 ),
                      new Location
                 (
-                    id : 3,
+                    id : 3.ToString(),
                     longitude : -1,
                     latitude : -8
                 ),
                 new Location
                 (
-                    id : 4,
+                    id : 4.ToString(),
                     longitude : 4   ,
                     latitude : 3
                 ),
                 new Location
                 (
-                    id : 5,
+                    id : 5.ToString(),
                     longitude : 9,
                     latitude : 3
                 ),
                 new Location
                 (
-                    id : 6,
+                    id : 6.ToString(),
                     longitude : 0,
                     latitude : 3
                 ),
                 new Location
                 (
-                    id : 7,
+                    id : 7.ToString(),
                     longitude : 55,
                     latitude : 33
                 ),
@@ -69,7 +69,6 @@ namespace ShorterPathAlgTest
 
                 locs.Add(new Location
                 (
-                    id: ++id,
                     latitude: latitude,
                     longitude: longitude
                 ));

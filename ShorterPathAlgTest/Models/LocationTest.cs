@@ -13,13 +13,13 @@ namespace ShorterPathAlgTest.Models
         [SetUp]
         public void Init()
         {
-            _location = new Location(1, 2, 4);
+            _location = new Location(1.ToString(), 2, 4);
         }
 
         [Test]
         public void ComputeEuclidicDistance_ReturnsCorrectly()
         {
-            var loc2 = new Location(1, 1, 3);
+            var loc2 = new Location(1.ToString(), 1, 3);
 
             var result = _location.ComputeEuclidicDistance(loc2);
 
@@ -31,13 +31,13 @@ namespace ShorterPathAlgTest.Models
         {
             var loc1 = new Location
             (
-                id : 1,
+                id : 1.ToString(),
                 longitude : 4,
                 latitude : 7
             );
             var loc2 = new Location
             (
-                id : 2,
+                id : 2.ToString(),
                 longitude : 3,
                 latitude : 2
             );
