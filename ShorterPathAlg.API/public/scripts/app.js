@@ -1,10 +1,8 @@
 ﻿//dev version (need to run through babel, modernizr, uglify for prod)
 
-window.addEventListener("load", eventWindowLoaded, false);
-
-function eventWindowLoaded() {
+window.onload = function () {
     canvasApp();
-}
+};
 
 function isCanvasSupported() {
     var elem = document.createElement('canvas');
@@ -22,49 +20,76 @@ function canvasApp() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
-    var titleOffset = 300;
+    var titleOffset = 0;
 
-    var width = canvas.width = window.innerWidth;
-    var height = canvas.height = window.innerHeight - titleOffset;
-
-    var centerX = width * .5,
-        centerY = height * .5,
-        radius = 0,
-        speed = .04,
-        angle = 0;
-
-        render();
-    
-
-    function render() {
-        var y = Math.sin(angle) * height * .5;
-        ctx.fillStyle = "yellow";
-
-        ctx.clearRect(0, 0, width, height);
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-        ctx.fill();
-
-        angle += speed;
-
-        radius = (y > 0) ? y : -y;
-
-        requestAnimationFrame(render);
-
-        }
-    
-
-    function onResize() {
-        titleOffset = 300;
-
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight - titleOffset;
-
-        centerX = width * .5;
-        centerY = height * .5;
-        radius = 0;
-        speed = .04;
-        angle = 0;
+    var playground = {
+        width: canvas.width = window.innerWidth,
+        height: canvas.height = window.innerHeight - titleOffset,
+        centerX: window.innerWidth * .5,
+        centerY: (window.innerHeight - titleOffset) * .5 
     }
 
+    game.ctx = ctx;
+    game.isPaused = false;
+    
+    game.createRandomCircles(playground.width, playground.height);
+
+
+    render();
+
+// use this instead request animationFrame
+//function gameLoop() {
+//    window.setTimeout(gameLoop, 20);
+//    render();
+//}
+
+    function render() {
+        ctx.clearRect(0, 0, playground.width, playground.height);
+
+        drawLocations();
+        drawMenus();
+
+        requestAnimationFrame(render);
+    }
+
+    function drawMenus() {
+        ctx.fillStyle = "whitesmoke";
+        ctx.font = "40px Tangerine";
+        ctx.textBaseline = "top";
+        ctx.fillText("More points!", playground.width * .9 - 150, playground.height - 70);
+        ctx.fillText("Less points!", playground.width * .1, playground.height - 70);
+
+    }
+
+
+    function drawLocations() {
+        game.locations.forEach(location => game.drawCircle(location.x, location.y, 40));
+    }
+
+
+    function onResize() {
+        playground.width = canvas.width = window.innerWidth;
+        playground.height = canvas.height = window.innerHeight - titleOffset;
+
+        playground.centerX = playground.width * .5;
+        playground.centerY = playground.height * .5;
+    }
+
+    function handleMouseInputs() {
+        // run the game when mouse moves in the playground.
+        $('#canvas').mouseenter(function() {
+            game.isPaused = false;
+        });
+
+        // pause the game when mouse moves out the playground.
+        $('#canvas').mouseleave(function() {
+            game.isPaused = true;
+        });
+
+        // calculate the paddle position by using the mouse position.
+        $('#canvas').mousemove(function(e) {
+            pingpong.paddleB.y = e.pageY - pingpong.playground.offsetTop;
+        });
+
+    }
 }

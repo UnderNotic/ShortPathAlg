@@ -124,6 +124,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="public\scripts\app.data.js" />
+    <Content Include="public\scripts\app.drawing.js" />
     <Content Include="public\scripts\app.js" />
     <Content Include="public\index.html" />
     <Content Include="public\css\main.css" />
