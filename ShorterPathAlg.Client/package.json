@@ -1,0 +1,14 @@
+{
+  "name": "shorter_path_alg",
+  "version": "1.0.0",
+  "description": "Canvas front-end with asp.net back-end calculating shortest path",
+  "main": "./scripts/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.12.9"
+  }
+}
