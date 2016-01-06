@@ -1,4 +1,8 @@
-﻿//dev version (need to run through babel, modernizr, uglify for prod)
+﻿"use strict";
+
+var drawings = require("./drawing");
+var data = require("./data");
+
 
 window.onload = function () {
     canvasApp();

@@ -1,8 +1,4 @@
-﻿if (game === undefined) {
-    var game = {};
-}
-
-game.locations = [];
+﻿game.locations = [];
 
 game.createRandomCircles = function (width, height) {
     // randomly draw 5 circles

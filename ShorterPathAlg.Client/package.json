@@ -2,13 +2,18 @@
   "name": "shorter_path_alg",
   "version": "1.0.0",
   "description": "Canvas front-end with asp.net back-end calculating shortest path",
-  "main": "./scripts/app.js",
+  "main": "./app/js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf ../ShorterPathAlg.API/public/*",
+    "build": "webpack -d --display-modules --progress && node ./build_scripts/copy_statics.js",
+    "serve": "webpack-dev-server --content-base ../ShorterPathAlg.API/public"
   },
-  "author": "",
+  "author": "Piotr Szymura",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^1.12.9"
+    "fs-extra": "^0.26.3",
+    "rimraf": "^2.5.0",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
   }
 }

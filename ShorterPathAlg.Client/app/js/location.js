@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-class Location {
+var loc = class Location {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -35,3 +35,4 @@ class Location {
     }
 }
 
+module.exports = loc;
