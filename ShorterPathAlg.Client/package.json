@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf ../ShorterPathAlg.API/public/*",
     "build": "webpack -d --display-modules --progress && node ./build_scripts/copy_statics.js",
-    "serve": "webpack-dev-server --content-base ../ShorterPathAlg.API/public"
+    "serve": "node ./build_scripts/open_browser.js && webpack-dev-server --content-base ../ShorterPathAlg.API/public"
   },
   "author": "Piotr Szymura",
   "license": "ISC",
