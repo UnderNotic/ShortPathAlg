@@ -4,6 +4,7 @@ var config = {
     entry: "./app/js/app.js",
     output: {
         path: path.resolve("../ShorterPathAlg.API/public/scripts/"),
+        publicPath: "/scripts/",
         filename: "app.js"
     },
     module: {

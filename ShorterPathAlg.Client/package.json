@@ -5,8 +5,8 @@
   "main": "./app/js/app.js",
   "scripts": {
     "clean": "rimraf ../ShorterPathAlg.API/public/*",
-    "build": "webpack -d --display-modules --progress && node ./build_scripts/copy_statics.js",
-    "serve": "node ./build_scripts/open_browser.js && webpack-dev-server --content-base ../ShorterPathAlg.API/public"
+    "build": "webpack -d --display-modules --progress & node ./build_scripts/copy_statics.js",
+    "serve": "npm run build && node ./build_scripts/open_browser.js & webpack-dev-server --content-base ../ShorterPathAlg.API/public"
   },
   "author": "Piotr Szymura",
   "license": "ISC",
