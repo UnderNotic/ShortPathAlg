@@ -4,7 +4,7 @@ class Location {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.connectedLocations = [];    
+        this.connectedLocations = [];
     }
 
     toString() {
@@ -21,6 +21,7 @@ class Location {
 
     addConnectedLocation(location) {
         this.connectedLocations.push(location);
+        location.connectedLocations(this);
     }
 
     equals(location) {
@@ -35,10 +36,15 @@ class Location {
     }
 }
 
-class Circle extends Location{
-    constructor(x, y){
+class Circle extends Location {
+    constructor(x, y) {
         super(x, y)
         this.circleRadius = 40;
+    }
+
+    isPointInsideCircle(point) {
+        var distance = Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2))
+        if (distance < this.circleRadius) return this;
     }
 }
 

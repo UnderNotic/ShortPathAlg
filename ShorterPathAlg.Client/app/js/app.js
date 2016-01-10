@@ -2,7 +2,8 @@
 
 var Drawer = require("./drawer");
 var dataUtils = require("./data");
-var Dragger = require("./circle_dragger")
+var Dragger = require("./circle_dragger");
+var Connector = require("./circle_connector");
 
 var CANVAS_ID = "canvas"
 
@@ -18,11 +19,14 @@ function isCanvasSupported() {
 
 function canvasApp() {
     window.addEventListener("resize", onResize, false);
-
     if (!isCanvasSupported()) {
         return;
     }
     $("#canvasSupport").hide();
+
+    $("canvas").on("contextmenu", function () {
+        return false;
+    });
 
     var canvas = document.getElementById(CANVAS_ID);
     var ctx = canvas.getContext("2d");
@@ -31,15 +35,18 @@ function canvasApp() {
         width: canvas.width = window.innerWidth,
         height: canvas.height = window.innerHeight,
         centerX: window.innerWidth * .5,
-        centerY: (window.innerHeight) * .5 
+        centerY: (window.innerHeight) * .5
     }
-    
+
     var drawer = new Drawer(ctx);
- 
+    
     var circles = dataUtils.createRandomLocations(playground.width, playground.height, 5);
 
     var dragger = new Dragger(circles);
-    dragger.setHandlers(CANVAS_ID);
+    dragger.setHandlers(CANVAS_ID);    
+    var connector = new Connector(circles);
+    connector.setHandlers(CANVAS_ID);
+    
     render();
 
     function render() {
@@ -62,6 +69,10 @@ function canvasApp() {
     function drawCircles() {
         circles.forEach(location => drawer.drawCircle(location, 40));
     }
+    
+    function drawLines() {
+        
+    }
 
     function onResize() {
         playground.width = canvas.width = window.innerWidth;
@@ -78,17 +89,17 @@ function canvasApp() {
 
     function handleMouseInputs() {
         // run the game when mouse moves in the playground.
-        $('#canvas').mouseenter(function() {
+        $('#canvas').mouseenter(function () {
             game.isPaused = false;
         });
 
         // pause the game when mouse moves out the playground.
-        $('#canvas').mouseleave(function() {
+        $('#canvas').mouseleave(function () {
             game.isPaused = true;
         });
 
         // calculate the paddle position by using the mouse position.
-        $('#canvas').mousemove(function(e) {
+        $('#canvas').mousemove(function (e) {
             pingpong.paddleB.y = e.pageY - pingpong.playground.offsetTop;
         });
 

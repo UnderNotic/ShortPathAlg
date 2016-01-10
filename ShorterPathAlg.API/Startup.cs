@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
 using Autofac.Integration.SignalR;
 using Autofac.Integration.WebApi;
