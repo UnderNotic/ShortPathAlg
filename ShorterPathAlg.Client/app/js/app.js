@@ -1,7 +1,11 @@
 ﻿"use strict";
 
-var drawings = require("./drawing");
-var data = require("./data");
+var Drawer = require("./drawer");
+var dataUtils = require("./data");
+var Dragger = require("./circle_dragger")
+
+var CANVAS_ID = "canvas"
+
 
 window.onload = function () {
     canvasApp();
@@ -20,36 +24,27 @@ function canvasApp() {
     }
     $("#canvasSupport").hide();
 
-    var canvas = document.getElementById("canvas");
+    var canvas = document.getElementById(CANVAS_ID);
     var ctx = canvas.getContext("2d");
-
-    var titleOffset = 0;
 
     var playground = {
         width: canvas.width = window.innerWidth,
-        height: canvas.height = window.innerHeight - titleOffset,
+        height: canvas.height = window.innerHeight,
         centerX: window.innerWidth * .5,
-        centerY: (window.innerHeight - titleOffset) * .5 
+        centerY: (window.innerHeight) * .5 
     }
-
-    game.ctx = ctx;
-    game.isPaused = false;
     
-    game.createRandomCircles(playground.width, playground.height);
+    var drawer = new Drawer(ctx);
+ 
+    var circles = dataUtils.createRandomLocations(playground.width, playground.height, 5);
 
-
+    var dragger = new Dragger(circles);
+    dragger.setHandlers(CANVAS_ID);
     render();
-
-// use this instead request animationFrame
-//function gameLoop() {
-//    window.setTimeout(gameLoop, 20);
-//    render();
-//}
 
     function render() {
         ctx.clearRect(0, 0, playground.width, playground.height);
-
-        drawLocations();
+        drawCircles();
         drawMenus();
 
         requestAnimationFrame(render);
@@ -64,19 +59,22 @@ function canvasApp() {
 
     }
 
-
-    function drawLocations() {
-        game.locations.forEach(location => game.drawCircle(location.x, location.y, 40));
+    function drawCircles() {
+        circles.forEach(location => drawer.drawCircle(location, 40));
     }
-
 
     function onResize() {
         playground.width = canvas.width = window.innerWidth;
-        playground.height = canvas.height = window.innerHeight - titleOffset;
+        playground.height = canvas.height = window.innerHeight;
 
         playground.centerX = playground.width * .5;
         playground.centerY = playground.height * .5;
     }
+
+
+
+
+
 
     function handleMouseInputs() {
         // run the game when mouse moves in the playground.

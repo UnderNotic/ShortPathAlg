@@ -1,11 +1,19 @@
-﻿game.locations = [];
+﻿"use strict"
 
-game.createRandomCircles = function (width, height) {
+var Location = require("./location")
+
+var createRandomLocations = function (width, height, circlesCount) {
     // randomly draw 5 circles
-    var circlesCount = 5;
+    var locations = []
+    var offset = 80;
     for (var i = 0; i < circlesCount; i++) {
-        var x = Math.random() * width;
-        var y = Math.random() * (height - 300) + 200;
-        game.locations.push(new Location(x, y));
+        var x = Math.random() * (width - offset*2) + offset;
+        var y = Math.random() * (height - 350) + 200;
+        locations.push(new Location(x, y));
     }
+    return locations;
+};
+
+module.exports = {
+    createRandomLocations: createRandomLocations
 };

@@ -1,10 +1,10 @@
 ﻿"use strict";
 
-var loc = class Location {
+class Location {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.connectedLocations = [];
+        this.connectedLocations = [];    
     }
 
     toString() {
@@ -35,4 +35,11 @@ var loc = class Location {
     }
 }
 
-module.exports = loc;
+class Circle extends Location{
+    constructor(x, y){
+        super(x, y)
+        this.circleRadius = 40;
+    }
+}
+
+module.exports = Circle;
