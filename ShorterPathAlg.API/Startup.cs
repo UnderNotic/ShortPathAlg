@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Tokens;
 using System.Reflection;
 using Autofac;
+using Autofac.Integration.SignalR;
 using Autofac.Integration.WebApi;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using ShorterPathAlg;
 
@@ -34,16 +36,21 @@ namespace ShorterPathAlg
             var builder = new ContainerBuilder();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterHubs(Assembly.GetExecutingAssembly());
+
+            var config = new HubConfiguration();
 
             Bootstrap(builder);
 
             var container = builder.Build();
             httpConfiguration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
+            config.Resolver = new AutofacDependencyResolver(container);
 
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(httpConfiguration);
             app.UseWebApi(httpConfiguration);
+
+            app.MapSignalR("/signalr", config);
 
             // Make ./public the default root of the static files in our Web Application.
             app.UseFileServer(new FileServerOptions
@@ -58,7 +65,7 @@ namespace ShorterPathAlg
 
         private void Bootstrap(ContainerBuilder builder)
         {
-
+            builder.RegisterHubs(Assembly.GetExecutingAssembly());
         }
     }
 }
