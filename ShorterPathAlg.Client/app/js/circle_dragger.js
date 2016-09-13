@@ -6,6 +6,8 @@ class CircleDragger {
         this.isDragging = false;
     }
 
+
+    //handling should be in another place, same for dragger and connector
     setHandlers(canvasId) {
         var dragger = this;
         var draggedCircle = {};

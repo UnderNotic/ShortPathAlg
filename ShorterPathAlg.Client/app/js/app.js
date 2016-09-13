@@ -52,6 +52,7 @@ function canvasApp() {
     function render() {
         ctx.clearRect(0, 0, playground.width, playground.height);
         drawCircles();
+        drawLines();
         drawMenus();
 
         requestAnimationFrame(render);
@@ -61,8 +62,11 @@ function canvasApp() {
         ctx.fillStyle = "whitesmoke";
         ctx.font = "40px Tangerine";
         ctx.textBaseline = "top";
-        ctx.fillText("More points!", playground.width * .9 - 150, playground.height - 70);
-        ctx.fillText("Less points!", playground.width * .1, playground.height - 70);
+        const MorePoints = "More points!";
+        const LessPoints = "Less points!";
+        ctx.fillText(MorePoints, playground.width * .9 - 150, playground.height - 70);
+        ctx.fillText(LessPoints, playground.width * .1, playground.height - 70);
+        let morePointsLength = ctx.measureText(MorePoints); 
 
     }
 
@@ -71,7 +75,9 @@ function canvasApp() {
     }
     
     function drawLines() {
-        
+        circles.forEach(circle => circle.connectedLocations.forEach(conCircle =>{
+            drawer.drawLine(circle, conCircle, 2);
+        }))
     }
 
     function onResize() {

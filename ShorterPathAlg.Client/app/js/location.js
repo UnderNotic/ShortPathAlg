@@ -21,7 +21,23 @@ class Location {
 
     addConnectedLocation(location) {
         this.connectedLocations.push(location);
-        location.connectedLocations(this);
+        location.connectedLocations.push(this);
+    }
+
+    removeConntectedLocation(location) {
+        let index = this.connectedLocations.indexOf(location);
+        this.connectedLocations.splice(index, 1);
+        
+        let index2 = location.connectedLocations.indexOf(this);
+        location.connectedLocations.splice(index2, 1);
+    }
+
+    toggleConnectedLocation(location) {
+        if (this.connectedLocations.indexOf(location) === -1){
+            this.addConnectedLocation(location);
+        } else {
+            this.removeConntectedLocation(location);
+        }
     }
 
     equals(location) {
@@ -40,6 +56,7 @@ class Circle extends Location {
     constructor(x, y) {
         super(x, y)
         this.circleRadius = 40;
+        this.isClicked = false;
     }
 
     isPointInsideCircle(point) {

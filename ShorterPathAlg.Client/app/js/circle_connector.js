@@ -3,39 +3,38 @@
 class CircleConnector {
     constructor(circles) {
         this.circles = circles;
+        this.chosenCircle = null;
     }
 
     setHandlers(canvasId) {
 
         var connector = this;
-        var chosenCircle = {};
 
         var down = function (e) {
             if (e.which == 2 || e.which == 3) {
-                for (var index = 0; index < connector.circles.length; index++) {
-                    var tempCircle = connector.circles[index];
-                    var circle = tempCircle.isPointInsideCircle({ x: e.clientX, y: e.clientY });
-                    if (circle) {
-                        if (connector.chosenCircle) {
-                            chosenCircle.addConnectedLocation(circle);
+                let clickedCircle = connector.circles.find(circle => circle.isPointInsideCircle({ x: e.clientX, y: e.clientY }));
+
+                if (clickedCircle) {
+                    if (!!connector.chosenCircle) {
+                        if(connector.chosenCircle != clickedCircle ){
+                            connector.chosenCircle.toggleConnectedLocation(clickedCircle);
                         }
-                        else {
-                            chosenCircle = circle;
-                        }
+                        clickedCircle.isClicked = !clickedCircle.isClicked;
+                        connector.chosenCircle = null;
                     }
                     else {
-                        chosenCircle = {};
+                        clickedCircle.isClicked = !clickedCircle.isClicked;
+                        console.log("clicked circle", clickedCircle);
+                        connector.chosenCircle = clickedCircle;
                     }
                 }
-
+             
             }
         }
 
+
         $("#canvas").mousedown(function (e) { down(e) });
-
     }
-
-
 }
 
 module.exports = CircleConnector;
