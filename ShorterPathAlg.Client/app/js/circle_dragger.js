@@ -46,7 +46,7 @@ class CircleDragger {
         $("#" + canvasId).mousedown(function (e) { down(e) });
         $("#" + canvasId).mouseup(function (e) { up(e); });
         $("#" + canvasId).mousemove(function (e) { move(e); });
-        $("#canvas").mouseout(function (e) { out(e); });
+        $("#" + canvasId).mouseout(function (e) { out(e); });
     }
 }
 

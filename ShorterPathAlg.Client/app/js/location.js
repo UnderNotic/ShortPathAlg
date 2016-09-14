@@ -5,6 +5,7 @@ class Location {
         this.x = x;
         this.y = y;
         this.connectedLocations = [];
+        this.isStartOrEnd = false;
     }
 
     toString() {

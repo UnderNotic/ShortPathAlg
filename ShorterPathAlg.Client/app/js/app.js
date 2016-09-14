@@ -4,6 +4,7 @@ var Drawer = require("./drawer");
 var dataUtils = require("./data");
 var Dragger = require("./circle_dragger");
 var Connector = require("./circle_connector");
+var Marker = require("./circle_marker");
 
 var CANVAS_ID = "canvas"
 
@@ -46,7 +47,9 @@ function canvasApp() {
     dragger.setHandlers(CANVAS_ID);    
     var connector = new Connector(circles);
     connector.setHandlers(CANVAS_ID);
-    
+    var marker = new Marker(circles);
+    marker.setHandlers(CANVAS_ID);
+
     render();
 
     function render() {
@@ -76,8 +79,8 @@ function canvasApp() {
     
     function drawLines() {
         circles.forEach(circle => circle.connectedLocations.forEach(conCircle =>{
-            drawer.drawLine(circle, conCircle, 2);
-        }))
+            drawer.drawLine(circle, conCircle, 6);
+        }));
     }
 
     function onResize() {

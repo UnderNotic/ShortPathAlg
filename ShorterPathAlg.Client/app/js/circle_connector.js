@@ -33,7 +33,7 @@ class CircleConnector {
         }
 
 
-        $("#canvas").mousedown(function (e) { down(e) });
+        $("#" + canvasId).mousedown(function (e) { down(e) });
     }
 }
 
