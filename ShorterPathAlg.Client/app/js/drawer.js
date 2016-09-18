@@ -6,11 +6,18 @@ class Drawer {
     }
 
     drawCircle(circle) {
-        this.context.fillStyle = circle.isStartOrEnd ? "#337575" : circle.isClicked || circle.connectedLocations.length !== 0 ? "#cfc" : "whitesmoke";
+        this.context.fillStyle =  circle.connectedLocations.length !== 0 ? "#cfc" : "whitesmoke";
         this.context.beginPath();
         this.context.arc(circle.x, circle.y, circle.circleRadius, 0, Math.PI * 2, true);
-        this.context.closePath();
         this.context.fill();
+        
+        if(circle.isStartOrEnd){
+            this.context.font = "20px Georgia";
+            this.context.fillStyle =  "whitesmoke";
+            
+            this.context.fillText("|---->", circle.x - circle.circleRadius, circle.y + 50);
+        }
+     
     };
 
     drawLine(circle1, circle2, thickness) {

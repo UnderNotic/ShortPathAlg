@@ -54,8 +54,8 @@ function canvasApp() {
 
     function render() {
         ctx.clearRect(0, 0, playground.width, playground.height);
-        drawCircles();
         drawLines();
+        drawCircles();
         drawMenus();
 
         requestAnimationFrame(render);

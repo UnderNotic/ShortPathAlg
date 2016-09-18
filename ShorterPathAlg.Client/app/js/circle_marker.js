@@ -13,7 +13,7 @@ class CircleMarker {
         
             function handleDoubleClick(e) {
                 let clickedCircle = marker.circles.find(circle => circle.isPointInsideCircle({ x: e.clientX, y: e.clientY }));
-
+1
                 if (clickedCircle) {
                     clickedCircle.isStartOrEnd = !clickedCircle.isStartOrEnd;
                     if (clickedCircle.isStartOrEnd) {
