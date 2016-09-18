@@ -12,7 +12,7 @@ class Drawer {
         this.context.fill();
         
         if(circle.isStartOrEnd){
-            this.context.font = "20px Georgia";
+            this.context.font = "30px Tangerine";
             this.context.fillStyle =  "whitesmoke";
             
             this.context.fillText("|---->", circle.x - circle.circleRadius, circle.y + 50);
