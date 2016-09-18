@@ -6,7 +6,7 @@ class Drawer {
     }
 
     drawCircle(circle) {
-        this.context.fillStyle = circle.isClicked || circle.connectedLocations.length !== 0 ? "#cfc" : "whitesmoke";
+        this.context.fillStyle = circle.isStartOrEnd ? "#337575" : circle.isClicked || circle.connectedLocations.length !== 0 ? "#cfc" : "whitesmoke";
         this.context.beginPath();
         this.context.arc(circle.x, circle.y, circle.circleRadius, 0, Math.PI * 2, true);
         this.context.closePath();
