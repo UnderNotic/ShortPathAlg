@@ -6,8 +6,7 @@ var Dragger = require("./circle_dragger");
 var Connector = require("./circle_connector");
 var Marker = require("./circle_marker");
 
-var CANVAS_ID = "canvas"
-
+var CANVAS_ID = "canvas";
 
 window.onload = function () {
     canvasApp();
@@ -37,7 +36,7 @@ function canvasApp() {
         height: canvas.height = window.innerHeight,
         centerX: window.innerWidth * .5,
         centerY: (window.innerHeight) * .5
-    }
+    };
 
     var drawer = new Drawer(ctx);
     
@@ -56,22 +55,11 @@ function canvasApp() {
         ctx.clearRect(0, 0, playground.width, playground.height);
         drawLines();
         drawCircles();
-        drawMenus();
 
         requestAnimationFrame(render);
     }
 
-    function drawMenus() {
-        ctx.fillStyle = "whitesmoke";
-        ctx.font = "40px Tangerine";
-        ctx.textBaseline = "top";
-        const MorePoints = "More points!";
-        const LessPoints = "Less points!";
-        ctx.fillText(MorePoints, playground.width * .9 - 150, playground.height - 70);
-        ctx.fillText(LessPoints, playground.width * .1, playground.height - 70);
-        let morePointsLength = ctx.measureText(MorePoints); 
 
-    }
 
     function drawCircles() {
         circles.forEach(location => drawer.drawCircle(location, 40));

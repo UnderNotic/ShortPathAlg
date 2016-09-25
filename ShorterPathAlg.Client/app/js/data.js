@@ -1,10 +1,10 @@
-﻿"use strict"
+﻿"use strict";
 
-var Location = require("./location")
+var Location = require("./location");
 
 var createRandomLocations = function (width, height, circlesCount) {
     // randomly draw 5 circles
-    var locations = []
+    var locations = [];
     var offset = 80;
     for (var i = 0; i < circlesCount; i++) {
         var x = Math.random() * (width - offset*2) + offset;
