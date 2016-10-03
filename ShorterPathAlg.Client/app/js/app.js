@@ -49,6 +49,7 @@ function canvasApp() {
     var marker = new Marker(circles);
     marker.setHandlers(CANVAS_ID);
 
+    setDomHandlers();
     render();
 
     function render() {
@@ -59,6 +60,10 @@ function canvasApp() {
         requestAnimationFrame(render);
     }
 
+    function setDomHandlers() {
+        $("#right-btn").click(_ => circles.push(dataUtils.createRandomLocations(playground.width, playground.height, 1)[0]));
+        $("#left-btn").click(_ => circles.splice(circles.length - 1, 1));
+    }
 
 
     function drawCircles() {
