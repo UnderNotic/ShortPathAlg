@@ -78,27 +78,4 @@ function canvasApp() {
         playground.centerX = playground.width * .5;
         playground.centerY = playground.height * .5;
     }
-
-
-
-
-
-
-    function handleMouseInputs() {
-        // run the game when mouse moves in the playground.
-        $('#canvas').mouseenter(function () {
-            game.isPaused = false;
-        });
-
-        // pause the game when mouse moves out the playground.
-        $('#canvas').mouseleave(function () {
-            game.isPaused = true;
-        });
-
-        // calculate the paddle position by using the mouse position.
-        $('#canvas').mousemove(function (e) {
-            pingpong.paddleB.y = e.pageY - pingpong.playground.offsetTop;
-        });
-
-    }
 }
