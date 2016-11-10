@@ -1,23 +1,16 @@
 ﻿"use strict";
 
-class Location {
+export class Location {
     constructor(x, y) {
         this.x = x;
         this.y = y;
         this.connectedLocations = [];
+        this.connectedShortestPathLocation = {};
         this.isStartOrEnd = false;
     }
 
     toString() {
-        return "Location x: " + this.x + " y: " + this.y;
-    }
-
-    setX(x) {
-        this.x = x;
-    }
-
-    setY(y) {
-        this.y = y;
+        return `x: ${this.x} y: ${this.y}`;
     }
 
     addConnectedLocation(location) {
@@ -28,17 +21,21 @@ class Location {
     removeConntectedLocation(location) {
         let index = this.connectedLocations.indexOf(location);
         this.connectedLocations.splice(index, 1);
-        
+
         let index2 = location.connectedLocations.indexOf(this);
         location.connectedLocations.splice(index2, 1);
     }
 
     toggleConnectedLocation(location) {
-        if (this.connectedLocations.indexOf(location) === -1){
+        if (this.connectedLocations.indexOf(location) === -1) {
             this.addConnectedLocation(location);
         } else {
             this.removeConntectedLocation(location);
         }
+    }
+
+    computeEuclidicDistance(other) {
+        return Math.sqrt(Math.pow(this.x - other.x, 2) + Math.pow(this.y - other.y, 2));
     }
 
     equals(location) {
@@ -53,7 +50,7 @@ class Location {
     }
 }
 
-class Circle extends Location {
+export default class Circle extends Location {
     constructor(x, y) {
         super(x, y)
         this.circleRadius = 40;
@@ -65,5 +62,3 @@ class Circle extends Location {
         if (distance < this.circleRadius) return this;
     }
 }
-
-module.exports = Circle;

@@ -5,6 +5,8 @@ var dataUtils = require("./data");
 var Dragger = require("./circle_dragger");
 var Connector = require("./circle_connector");
 var Marker = require("./circle_marker");
+import Dijkstra from "./dijkstra/dijkstra";
+var Throttler = require("./dijkstra/throttler");
 
 var CANVAS_ID = "canvas";
 
@@ -39,11 +41,11 @@ function canvasApp() {
     };
 
     var drawer = new Drawer(ctx);
-    
+
     var circles = dataUtils.createRandomLocations(playground.width, playground.height, 5);
 
     var dragger = new Dragger(circles);
-    dragger.setHandlers(CANVAS_ID);    
+    dragger.setHandlers(CANVAS_ID);
     var connector = new Connector(circles);
     connector.setHandlers(CANVAS_ID);
     var marker = new Marker(circles);
@@ -57,6 +59,8 @@ function canvasApp() {
         drawLines();
         drawCircles();
 
+        computeShortestPath();
+
         requestAnimationFrame(render);
     }
 
@@ -69,11 +73,17 @@ function canvasApp() {
     function drawCircles() {
         circles.forEach(location => drawer.drawCircle(location, 40));
     }
-    
+
     function drawLines() {
-        circles.forEach(circle => circle.connectedLocations.forEach(conCircle =>{
+        circles.forEach(circle => circle.connectedLocations.forEach(conCircle => {
             drawer.drawLine(circle, conCircle, 6);
         }));
+    }
+
+    function computeShortestPath() {
+        debugger;
+        let dijkstraFunc = Dijkstra.bind(circles);
+        Throttler.throttleFunc(dijkstraFunc);
     }
 
     function onResize() {

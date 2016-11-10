@@ -9,6 +9,7 @@ var config = {
     },
     module: {
         loaders: [
+            { test: /\.js$/, loader: 'babel-loader' },
             { test: /\.css$/, loader: "style!css" }
         ]
     }
