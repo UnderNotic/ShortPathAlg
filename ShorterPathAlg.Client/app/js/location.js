@@ -5,7 +5,7 @@ export class Location {
         this.x = x;
         this.y = y;
         this.connectedLocations = [];
-        this.connectedShortestPathLocation = {};
+        this.connectedShortestPathLocation = null;
         this.isStartOrEnd = false;
     }
 

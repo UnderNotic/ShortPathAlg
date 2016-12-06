@@ -53,13 +53,13 @@ function canvasApp() {
 
     setDomHandlers();
     render();
+    computeShortestPath();
+
 
     function render() {
         ctx.clearRect(0, 0, playground.width, playground.height);
         drawLines();
         drawCircles();
-
-        computeShortestPath();
 
         requestAnimationFrame(render);
     }
@@ -75,15 +75,22 @@ function canvasApp() {
     }
 
     function drawLines() {
-        circles.forEach(circle => circle.connectedLocations.forEach(conCircle => {
-            drawer.drawLine(circle, conCircle, 6);
-        }));
+        circles.forEach(circle =>
+            circle.connectedLocations.forEach(conCircle => {
+                drawer.drawLine(circle, conCircle, 6);
+            }));
+
+        circles.filter(circle => circle.connectedShortestPathLocation !== null).forEach(circle => {
+            drawer.drawLine(circle, circle.connectedShortestPathLocation, 12);
+        });
     }
 
+
     function computeShortestPath() {
-        debugger;
-        let dijkstraFunc = Dijkstra.bind(circles);
-        Throttler.throttleFunc(dijkstraFunc);
+        //this hashcode should also consider paths
+        return Throttler.throttleFunc(Dijkstra, circles, (circles) => {
+            return circles.reduce((res, curr) => res + curr.getHashcode(), "");
+        });
     }
 
     function onResize() {

@@ -1,17 +1,19 @@
-const DELAY = 500;
-var call;
+const DELAY = 100;
 
-export let throttleFunc = (func) => {
-    if (toString.apply(func) === "[object Function]") {
-        if (!call) {
-            call = func;
-            startProcessing();
-        } else {
-            call = func;
-        }
-    }
-}
+//func should be pure function
+export let throttleFunc = (func, args, hashcodeFunc = null) => {
+    let lastHashcode = null;
+    let closureArgs = args;
+    let disposable = setInterval(() => {
+        let hashcode = hashcodeFunc(closureArgs);
+        if (hashcodeFunc !== null && lastHashcode !== null && hashcode === lastHashcode) return;
+        lastHashcode = hashcode;
+        func(closureArgs);
+        console.log("result", closureArgs);
+    }, DELAY);
 
-let startProcessing = () => {
-    setInterval(call, delay);
+    return {
+        dispose: () => clearInterval(disposable),
+        changeArgs: (args) => closureArgs = args
+    };
 }

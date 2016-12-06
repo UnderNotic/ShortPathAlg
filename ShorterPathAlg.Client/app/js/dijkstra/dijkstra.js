@@ -1,10 +1,15 @@
 export default (locations) => {
+    console.log("executing dijktra");
     let start = locations.filter(loc => loc.isStartOrEnd)[0];
     let end = locations.filter(loc => loc.isStartOrEnd)[1];
 
     if (!start || !end) {
         return;
     }
+
+    locations.forEach(loc => {
+        loc.connectedShortestPathLocation = null;
+    });
     locations = locations.slice(); //from this array shit should be delted
     let vertexes = locations.map(loc => { // this is result with dist and prev and pointer to loc
         let dist = loc === start ? 0 : Infinity;
@@ -36,5 +41,6 @@ export default (locations) => {
         shortestPath.unshift(prev.loc);
         prev = vertexes.find(v => v.loc === prev.loc).prev;
     }
+
     return shortestPath;
 }
