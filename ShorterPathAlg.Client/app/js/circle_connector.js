@@ -16,7 +16,7 @@ class CircleConnector {
 
                 if (clickedCircle) {
                     if (!!connector.chosenCircle) {
-                        if(connector.chosenCircle != clickedCircle ){
+                        if (connector.chosenCircle != clickedCircle) {
                             connector.chosenCircle.toggleConnectedLocation(clickedCircle);
                         }
                         clickedCircle.isClicked = !clickedCircle.isClicked;
@@ -24,11 +24,10 @@ class CircleConnector {
                     }
                     else {
                         clickedCircle.isClicked = !clickedCircle.isClicked;
-                        console.log("clicked circle", clickedCircle);
                         connector.chosenCircle = clickedCircle;
                     }
                 }
-             
+
             }
         }
 

@@ -14,7 +14,6 @@ class CircleDragger {
 
         var down =
             function handleMouseDown(e) {
-                console.log("mouse down! x:" + e.clientX + " y:" + e.clientY);
                 for (var index = 0; index < dragger.circles.length; index++) {
                     var tempCircle = dragger.circles[index];
                     var circle = tempCircle.isPointInsideCircle({ x: e.clientX, y: e.clientY });
