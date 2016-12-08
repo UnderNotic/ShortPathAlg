@@ -9,7 +9,6 @@ export let throttleFunc = (func, args, hashcodeFunc = null) => {
         if (hashcodeFunc !== null && lastHashcode !== null && hashcode === lastHashcode) return;
         lastHashcode = hashcode;
         func(closureArgs);
-        console.log("result", closureArgs);
     }, DELAY);
 
     return {

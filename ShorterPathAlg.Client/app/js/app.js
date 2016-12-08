@@ -58,8 +58,12 @@ function canvasApp() {
 
     function render() {
         ctx.clearRect(0, 0, playground.width, playground.height);
+
+        //rendering object should be prepared and actual rendering should be done later based o z-index priorities(shortest path aboce other cricles)
+        drawBorderOnShortestPathCircles();
         drawLines();
         drawCircles();
+
 
         requestAnimationFrame(render);
     }
@@ -74,15 +78,19 @@ function canvasApp() {
         circles.forEach(location => drawer.drawCircle(location, 40));
     }
 
+    function drawBorderOnShortestPathCircles() {
+        circles.forEach(location => drawer.drawBorderOnShortestPathCircle(location));
+    }
+
     function drawLines() {
+        circles.filter(circle => circle.connectedShortestPathLocation !== null).forEach(circle => {
+            drawer.drawLine(circle, circle.connectedShortestPathLocation, 10, "whitesmoke");
+        });
+
         circles.forEach(circle =>
             circle.connectedLocations.forEach(conCircle => {
-                drawer.drawLine(circle, conCircle, 6);
+                drawer.drawLine(circle, conCircle, 6, "#cfc");
             }));
-
-        circles.filter(circle => circle.connectedShortestPathLocation !== null).forEach(circle => {
-            drawer.drawLine(circle, circle.connectedShortestPathLocation, 12);
-        });
     }
 
 
