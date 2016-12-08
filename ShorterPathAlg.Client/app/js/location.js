@@ -47,7 +47,7 @@ export class Location {
     }
 
     getHashcode() {
-        return this.x.toString().concat(this.y.toString());
+        return this.x.toString() + this.y.toString() + this.isStartOrEnd + this.connectedLocations.length;
     }
 }
 
