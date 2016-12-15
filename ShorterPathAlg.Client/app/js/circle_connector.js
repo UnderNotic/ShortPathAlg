@@ -15,7 +15,7 @@ class CircleConnector {
                 let clickedCircle = connector.circles.find(circle => circle.isPointInsideCircle({ x: e.clientX, y: e.clientY }));
 
                 if (clickedCircle) {
-                    if (!!connector.chosenCircle) {
+                    if (connector.chosenCircle) {
                         if (connector.chosenCircle != clickedCircle) {
                             connector.chosenCircle.toggleConnectedLocation(clickedCircle);
                         }
