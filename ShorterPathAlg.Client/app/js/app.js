@@ -13,7 +13,6 @@ var CANVAS_ID = "canvas";
 window.onload = function () {
     canvasApp();
 };
-
 function isCanvasSupported() {
     var elem = document.createElement('canvas');
     return !!(elem.getContext && elem.getContext('2d'));
@@ -64,6 +63,8 @@ function canvasApp() {
         drawLines();
         drawCircles();
 
+        //TODO
+        drawer.drawFloatingCircles(circles);
 
         requestAnimationFrame(render);
     }
@@ -73,13 +74,12 @@ function canvasApp() {
         $("#left-btn").click(_ => circles.splice(circles.length - 1, 1));
     }
 
-
     function drawCircles() {
         circles.forEach(location => drawer.drawCircle(location, 40));
     }
 
     function drawBorderOnShortestPathCircles() {
-        circles.forEach(location => drawer.drawBorderOnShortestPathCircle(location));
+        circles.forEach(location => drawer.drawBorder(location));
     }
 
     function drawLines() {
