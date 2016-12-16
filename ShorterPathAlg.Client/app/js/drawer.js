@@ -67,6 +67,7 @@ class Drawer {
                 offset: { x: 0, y: 0 },
                 shift: { x: 0, y: 0 },
                 speed: 0.04,
+                random: Math.random() * 360,
                 fillColor: '#whitesmoke',
                 orbit: circle.circleRadius * 1.4
             };
@@ -81,8 +82,8 @@ class Drawer {
             particle.shift.y += (circle.y - particle.shift.y) * (particle.speed);
 
             // Apply position
-            particle.position.x = particle.shift.x + Math.cos(1 + particle.offset.x) * (particle.orbit);
-            particle.position.y = particle.shift.y + Math.sin(1 + particle.offset.y) * (particle.orbit);
+            particle.position.x = particle.shift.x + Math.cos(particle.random + particle.offset.x) * (particle.orbit);
+            particle.position.y = particle.shift.y + Math.sin(particle.random + particle.offset.y) * (particle.orbit);
 
             this.context.beginPath();
             this.context.fillStyle = particle.fillColor;
