@@ -5,6 +5,7 @@ class Drawer {
         this.context = context;
         this.particle = null;
         this.chosenCircle = [];
+        this.inShortestPath = [];
     }
 
     drawCircle(circle) {
@@ -32,12 +33,12 @@ class Drawer {
 
             this.context.beginPath();
             this.context.fillStyle = circle.connectedLocations.length !== 0 ? 'whitesmoke' : '#cfc';
-            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.2, this.chosenCircle[0].lastPosStart, this.chosenCircle[0].lastPosEnd, true);
+            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.16, this.chosenCircle[0].lastPosStart, this.chosenCircle[0].lastPosEnd, true);
             this.context.fill();
 
             this.context.beginPath();
             this.context.fillStyle = '#D0CA9C';
-            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.2, this.chosenCircle[1].lastPosStart, this.chosenCircle[1].lastPosEnd, false);
+            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.16, this.chosenCircle[1].lastPosStart, this.chosenCircle[1].lastPosEnd, false);
             this.context.fill();
         }
 
@@ -45,48 +46,24 @@ class Drawer {
         this.context.beginPath();
         this.context.arc(circle.x, circle.y, circle.circleRadius, 0, Math.PI * 2, true);
         this.context.fill();
-
-        if (!circle.isStartOrEnd && circle.isInShortestPath) {
-            //fix when more than 1 in path to do that persist state of every particle
-            var RADIUS_SCALE = 1;
-
-            let particle = this.particle = this.particle || {
-                size: 11,
-                position: { x: circle.x, y: circle.y },
-                offset: { x: 0, y: 0 },
-                shift: { x: 0, y: 0 },
-                speed: 0.04,
-                fillColor: '#whitesmoke',
-                orbit: circle.circleRadius * 1.4
-            };
-
-            var lp = { x: particle.position.x, y: particle.position.y };
-
-            // Rotation
-            particle.offset.x += particle.speed;
-            particle.offset.y += particle.speed;
-
-            // Follow mouse with some lag
-            particle.shift.x += (circle.x - particle.shift.x) * (particle.speed);
-            particle.shift.y += (circle.y - particle.shift.y) * (particle.speed);
-
-            // Apply position
-            particle.position.x = particle.shift.x + Math.cos(1 + particle.offset.x) * (particle.orbit * RADIUS_SCALE);
-            particle.position.y = particle.shift.y + Math.sin(1 + particle.offset.y) * (particle.orbit * RADIUS_SCALE);
-
-            this.context.beginPath();
-            this.context.fillStyle = particle.fillColor;
-            this.context.strokeStyle = particle.fillColor;
-            this.context.lineWidth = particle.size;
-
-            this.context.moveTo(lp.x, lp.y);
-
-            this.context.arc(particle.position.x, particle.position.y, particle.size / 2, 0, Math.PI * 2, true);
-            this.context.fill();
-        }
     }
 
-    drawBorderOnShortestPathCircle(circle) {
+    drawFloatingCircles(circles) {
+        // match floating circles with actual circles and their x, y pos
+        // for (let i = circles.length; i < this.inShortestPath.length; i++) {
+        //     this.inShortestPath.push({
+        //         size: 5,
+        //         position: { x: circle.x, y: circle.y },
+        //         offset: { x: 0, y: 0 },
+        //         shift: { x: 0, y: 0 },
+        //         speed: 0.04,
+        //         fillColor: '#whitesmoke',
+        //         orbit: circle.circleRadius * 1.4
+        //     })
+        // }
+    }
+
+    drawBorder(circle) {
         if (circle.isInShortestPath) {
             this.context.fillStyle = "whitesmoke";
             this.context.beginPath();

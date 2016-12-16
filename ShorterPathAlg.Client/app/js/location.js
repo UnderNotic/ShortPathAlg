@@ -8,6 +8,7 @@ export class Location {
         this.isInShortestPath = false;
         this.connectedShortestPathLocation = null;
         this.isStartOrEnd = false;
+        this.guid = Math.random(); // this is needed for drawFloatingCircles
     }
 
     toString() {
