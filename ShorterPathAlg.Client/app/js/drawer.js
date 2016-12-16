@@ -94,8 +94,10 @@ class Drawer {
 
             this.context.arc(particle.position.x, particle.position.y, particle.size / 2, 0, Math.PI * 2, true);
             this.context.fill();
-
         });
+        notAssignedFloatingCirclesGuids.forEach(guid => {
+            delete this.inShortestPath[guid];
+        })
     }
 
     drawBorder(circle) {
