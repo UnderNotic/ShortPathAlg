@@ -4,22 +4,40 @@ class Drawer {
     constructor(context) {
         this.context = context;
         this.particle = null;
-        this.chosenCircle = null;
+        this.chosenCircle = [];
     }
 
     drawCircle(circle) {
         if (circle.isStartOrEnd) {
-            let radians = this.chosenCircle = this.chosenCircle + 0.1 || 0.1 * Math.PI;
-            this.context.beginPath();
-            this.context.fillStyle = '#' + (Math.random() * 0x404040 + 0xaaaaaa | 0).toString(16);
-            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.2, radians, radians + 10, true);
+            //randomize number of moiving things and colour of it 
 
+            this.chosenCircle[0] = this.chosenCircle[0] || {
+                id: circle.getHashcode(),
+                lastPosStart: 2 * Math.PI,
+                lastPosEnd: 0
+            };
+
+            this.chosenCircle[1] = this.chosenCircle[1] || {
+                id: circle.getHashcode(),
+                lastPosStart: 0,
+                lastPosEnd: 2 * Math.PI * 0.6
+            };
+
+            let speed = 0.07;
+
+            this.chosenCircle[0].lastPosStart += speed;
+            this.chosenCircle[0].lastPosEnd += speed;
+            this.chosenCircle[1].lastPosStart += speed;
+            this.chosenCircle[1].lastPosEnd += speed;
+
+            this.context.beginPath();
+            this.context.fillStyle = circle.connectedLocations.length !== 0 ? 'whitesmoke' : '#cfc';
+            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.2, this.chosenCircle[0].lastPosStart, this.chosenCircle[0].lastPosEnd, true);
             this.context.fill();
+
             this.context.beginPath();
-            this.context.fillStyle = '#' + (Math.random() * 0x404040 + 0xaaaaaa | 0).toString(16);
-
-            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.2, radians + 10, radians + 20, true);
-
+            this.context.fillStyle = '#D0CA9C';
+            this.context.arc(circle.x, circle.y, circle.circleRadius * 1.2, this.chosenCircle[1].lastPosStart, this.chosenCircle[1].lastPosEnd, false);
             this.context.fill();
         }
 
@@ -29,6 +47,7 @@ class Drawer {
         this.context.fill();
 
         if (!circle.isStartOrEnd && circle.isInShortestPath) {
+            //fix when more than 1 in path to do that persist state of every particle
             var RADIUS_SCALE = 1;
 
             let particle = this.particle = this.particle || {
