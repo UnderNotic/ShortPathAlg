@@ -46,21 +46,49 @@ class Drawer {
         this.context.beginPath();
         this.context.arc(circle.x, circle.y, circle.circleRadius, 0, Math.PI * 2, true);
         this.context.fill();
+
+        if (!circle.isStartOrEnd && circle.isInShortestPath) {
+            let particle = this.inShortestPath[circle.guid] = this.inShortestPath[circle.guid] || {
+                size: 11,
+                position: { x: circle.x, y: circle.y },
+                offset: { x: 0, y: 0 },
+                shift: { x: 0, y: 0 },
+                speed: 0.04,
+                fillColor: '#whitesmoke',
+                orbit: circle.circleRadius * 1.4
+            };
+
+            var lp = { x: particle.position.x, y: particle.position.y };
+
+            // Rotation
+            particle.offset.x += particle.speed;
+            particle.offset.y += particle.speed;
+
+            // Follow mouse with some lag
+            particle.shift.x += (circle.x - particle.shift.x) * (particle.speed);
+            particle.shift.y += (circle.y - particle.shift.y) * (particle.speed);
+
+            // Apply position
+            particle.position.x = particle.shift.x + Math.cos(1 + particle.offset.x) * (particle.orbit);
+            particle.position.y = particle.shift.y + Math.sin(1 + particle.offset.y) * (particle.orbit);
+
+            this.context.beginPath();
+            this.context.fillStyle = particle.fillColor;
+            this.context.strokeStyle = particle.fillColor;
+            this.context.lineWidth = particle.size;
+
+            this.context.moveTo(lp.x, lp.y);
+
+            this.context.arc(particle.position.x, particle.position.y, particle.size / 2, 0, Math.PI * 2, true);
+            this.context.fill();
+        }
     }
 
     drawFloatingCircles(circles) {
         // match floating circles with actual circles and their x, y pos
-        // for (let i = circles.length; i < this.inShortestPath.length; i++) {
-        //     this.inShortestPath.push({
-        //         size: 5,
-        //         position: { x: circle.x, y: circle.y },
-        //         offset: { x: 0, y: 0 },
-        //         shift: { x: 0, y: 0 },
-        //         speed: 0.04,
-        //         fillColor: '#whitesmoke',
-        //         orbit: circle.circleRadius * 1.4
-        //     })
-        // }
+        // circles.forEach(circle => {
+        //     let particle = this.inShortestPath[circle.guid] = this.inShortestPath[circle.guid]
+        // })
     }
 
     drawBorder(circle) {
