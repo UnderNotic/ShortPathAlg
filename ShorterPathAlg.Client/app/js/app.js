@@ -64,7 +64,7 @@ function canvasApp() {
         drawCircles();
 
         //TODO
-        drawer.drawFloatingCircles(circles);
+        drawer.drawFloatingCircles(circles.filter(circle => !circle.isStartOrEnd && circle.isInShortestPath));
 
         requestAnimationFrame(render);
     }

@@ -46,10 +46,23 @@ class Drawer {
         this.context.beginPath();
         this.context.arc(circle.x, circle.y, circle.circleRadius, 0, Math.PI * 2, true);
         this.context.fill();
+    }
 
-        if (!circle.isStartOrEnd && circle.isInShortestPath) {
+
+    drawFloatingCircles(circles) {
+        // Check and fix memory leak
+        let notAssignedFloatingCirclesGuids = Object.keys(this.inShortestPath).filter(guid => !circles.map(c => c.guid).includes(guid));
+        let notAssignedCirclesGuids = circles.map(c => c.guid).filter(c => !Object.keys(this.inShortestPath).includes(c));
+
+        circles.forEach(circle => {
+            if (notAssignedCirclesGuids.includes(circle.guid)) {
+                let movedFloatingCircleGuid = notAssignedFloatingCirclesGuids.shift();
+                let value = movedFloatingCircleGuid ? Object.assign({}, this.inShortestPath[movedFloatingCircleGuid]) : null;
+                this.inShortestPath[circle.guid] = this.inShortestPath[circle.guid] || value;
+            }
+
             let particle = this.inShortestPath[circle.guid] = this.inShortestPath[circle.guid] || {
-                size: 11,
+                size: 10,
                 position: { x: circle.x, y: circle.y },
                 offset: { x: 0, y: 0 },
                 shift: { x: 0, y: 0 },
@@ -57,7 +70,6 @@ class Drawer {
                 fillColor: '#whitesmoke',
                 orbit: circle.circleRadius * 1.4
             };
-
             var lp = { x: particle.position.x, y: particle.position.y };
 
             // Rotation
@@ -81,14 +93,8 @@ class Drawer {
 
             this.context.arc(particle.position.x, particle.position.y, particle.size / 2, 0, Math.PI * 2, true);
             this.context.fill();
-        }
-    }
 
-    drawFloatingCircles(circles) {
-        // match floating circles with actual circles and their x, y pos
-        // circles.forEach(circle => {
-        //     let particle = this.inShortestPath[circle.guid] = this.inShortestPath[circle.guid]
-        // })
+        });
     }
 
     drawBorder(circle) {
