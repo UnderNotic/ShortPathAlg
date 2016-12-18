@@ -7,6 +7,7 @@ var Connector = require("./circle_connector");
 var Marker = require("./circle_marker");
 import Dijkstra from "./dijkstra/dijkstra";
 var Throttler = require("./dijkstra/throttler");
+import fps from "./fpsCounter";
 
 var CANVAS_ID = "canvas";
 
@@ -65,6 +66,8 @@ function canvasApp() {
 
         //TODO
         drawer.drawFloatingCircles(circles.filter(circle => !circle.isStartOrEnd && circle.isInShortestPath));
+
+        ctx.fillText("FPS: " + fps(), 0, 10);
 
         requestAnimationFrame(render);
     }
