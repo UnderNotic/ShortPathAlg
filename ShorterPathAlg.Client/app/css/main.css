@@ -53,6 +53,16 @@ canvas {
     margin-left: 5%;
 }
 
+
+#ctr-btn{
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 100px; 
+}
+
 #right-btn{
     float: right;
     margin-right: 5%;
