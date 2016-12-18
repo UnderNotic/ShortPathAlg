@@ -63,11 +63,13 @@ function canvasApp() {
         drawBorderOnShortestPathCircles();
         drawLines();
         drawCircles();
-
         //TODO
         drawer.drawFloatingCircles(circles.filter(circle => !circle.isStartOrEnd && circle.isInShortestPath));
 
+        ctx.fillStyle = "white";
         ctx.fillText("FPS: " + fps(), 0, 10);
+        ctx.fillText("Nodes: " + circles.length, 0, 20);
+        ctx.fillText("Edges: " + circles.reduce((prev, curr) => prev + curr.connectedLocations.length, 0) / 2, 0, 30)
 
         requestAnimationFrame(render);
     }
@@ -75,6 +77,11 @@ function canvasApp() {
     function setDomHandlers() {
         $("#right-btn").click(_ => circles.push(dataUtils.createRandomLocations(playground.width, playground.height, 1)[0]));
         $("#left-btn").click(_ => circles.splice(circles.length - 1, 1));
+        $("#ctr-btn").click(_ => {
+            //Number of circles should not be hardcode and add scale => more circles smaller circles lines etc.
+            circles.splice(0, circles.length);
+            dataUtils.createRandomLocationsWithConnections(playground.width, playground.height, 10).forEach(c => circles.push(c));
+        });
     }
 
     function drawCircles() {
